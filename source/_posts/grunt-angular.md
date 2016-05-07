@@ -3,6 +3,7 @@ title: 前后端分离之前端项目构建（grunt+require+angular）
 date: 2016-05-02 22:33:32
 categories: 工作
 tags: [grunt, angular, 构建, 教程]
+toc: true
 ---
 
 ---

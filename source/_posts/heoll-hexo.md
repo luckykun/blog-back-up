@@ -3,6 +3,7 @@ title: hexo搭建属于自己的博客
 date: 2016-04-23 22:11:51
 categories: 工作
 tags: [hexo, 教程]
+toc: true
 ---
 
 
