@@ -1,6 +1,6 @@
 "use strict";
 var fs = require("fs");
-var path = "./photos/images";
+var path = "./photos/";
 
 fs.readdir(path, function (err, files) {
     if (err) {
@@ -9,11 +9,11 @@ fs.readdir(path, function (err, files) {
     var arr = [];
     (function iterator(index) {
         if (index == files.length) {
-            fs.writeFile("./photos/photos.json", JSON.stringify(arr, null, "\t"));
+            fs.writeFile("./source/photos/data.json", JSON.stringify(arr, null, "\t"));
             return;
         }
 
-        fs.stat(path + "/" + files[index], function (err, stats) {
+        fs.stat(path + files[index], function (err, stats) {
             if (err) {
                 return;
             }
