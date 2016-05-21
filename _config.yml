@@ -3,10 +3,10 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: jarson的博客
+title: luckykun-不一样的世界
 subtitle: 我就是我，颜色不一样的烟火
 description: testtest
-author: jarson
+author: luckykun
 language: zh-CN
 timezone:
 
@@ -108,5 +108,5 @@ theme: yilia
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repository: https://github.com/jarson7426/jarson7426.github.io.git
+  repository: https://github.com/luckykun/luckykun.github.io.git
   branch: master
