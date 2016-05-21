@@ -176,8 +176,8 @@ WxShare.prototype.init = function(){  //获取用户信息
             appId: 'xxxxxxxxxxxxxxxxxx',
             url: url,
             imgUrl: 'http://pic24.nipic.com/20120831/10132780_100453579000_2.jpg',
-            title: '云盾双11-精彩不断！',
-            desc: '这时发送给朋友的描述信息',
+            title: '这是分享出去的标题',
+            desc: '这是发送给朋友的描述信息',
             link: linkUrl,
             circleFunction: function(){
             },

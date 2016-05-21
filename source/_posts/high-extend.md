@@ -1,6 +1,6 @@
 ---
 title: 实例demo之Highextend图表
-date: '2016-05-012 12:11:51'
+date: '2016-05-12 12:11:51'
 categories: 工作
 tags:
   - demo
