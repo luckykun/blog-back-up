@@ -12,7 +12,7 @@ toc: true
 --------------------------------------------------------------------------------
 
 <header style="margin-top:-55px;text-align:center">
-    <p style="font-size: 1.5em;margin-top: 30px;"><span>highextend图表示例</span><a href="https://github.com/luckykun/highextend" style="font-size:14px;font-weight:normal;">view on github</a></p>
+    <p style="font-size: 1.5em;margin-top: 30px;"><span>highextend图表实例</span><a href="https://github.com/luckykun/highextend" style="font-size:14px;font-weight:normal;">view on github</a></p>
 </header>
 
 highextend是基于highcharts进一步封装的图表组件，组件暴露一个`Hxt`的全局对象，它有以下一些方法来绘制不同类的图形，从此以后，画图只需简简单单的几行配置就ok了！赶紧点进来看看实例吧！

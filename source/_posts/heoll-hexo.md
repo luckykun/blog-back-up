@@ -15,7 +15,8 @@ toc: true
 为了引起读者的兴趣，先介绍一下，搭建完成之后，只需这几个简单常用的命令，就能够轻松维护自己的博客了：
 
 ```js
-$ hexo new(n)    //写文章
+$ hexo new(n) xxx    //写文章
+$ hexo clean     //清除缓存
 $ hexo generate(g)    //把文章生成页面
 $ hexo server(s)    //启动本地服务调试
 $ hexo deploy(d)    //部署到github 可与hexo g合并为 hexo d -g

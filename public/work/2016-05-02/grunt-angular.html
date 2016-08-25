@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="luckykun-不一样的世界">
 <meta property="og:description" content="前段时间在公司做了一个项目，前后端的合作方式是这样的：前端开发页面，然后把代码给到后端同学，后端同学通过java的vm模板来渲染页面。慢慢的我发现，这种方式简直是太low了，因为所有的前端代码都揉在服务端同学那里，而每次项目需要更新，甚至只是页面微调，只要服务端同学说他不懂，或者是没有时间，我们前端同学就要屁颠屁颠的跑去他那里配合他修改代码，维护成本高，卖力不讨好==，那我们到底该怎么办呢？">
 <meta property="og:image" content="https://img.alicdn.com/tps/TB1bzUGJXXXXXcOXpXXXXXXXXXX-251-584.png">
-<meta property="og:updated_time" content="2016-05-15T07:15:25.274Z">
+<meta property="og:updated_time" content="2016-08-24T16:38:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前后端分离之前端项目构建（grunt+require+angular）">
 <meta name="twitter:description" content="前段时间在公司做了一个项目，前后端的合作方式是这样的：前端开发页面，然后把代码给到后端同学，后端同学通过java的vm模板来渲染页面。慢慢的我发现，这种方式简直是太low了，因为所有的前端代码都揉在服务端同学那里，而每次项目需要更新，甚至只是页面微调，只要服务端同学说他不懂，或者是没有时间，我们前端同学就要屁颠屁颠的跑去他那里配合他修改代码，维护成本高，卖力不讨好==，那我们到底该怎么办呢？">
@@ -22,7 +22,6 @@
   
   
       <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
-    <!-- <link rel="icon" href="/favicon.ico?v=0.5.0"> -->
   
   <link rel="stylesheet" href="/css/style.css">
 
@@ -38,16 +37,87 @@
 </head>
 
 <body>
+    <div id="overviews">
+        <div id="slider-wrap">
+            <div class="sliders">
+                <div class="slide" data-num="1">
+                    <div class="text-wrap">
+                        <p>神灯神灯，我有一个愿望，</p>
+                        <p>我不要金钱、权利；</p>
+                        <p>也不要长生、不老。</p>
+                        <p>我只想要遇到一个女孩，</p>
+                        <p>能陪着她哭，陪着她笑，陪她一起细水长流。</p>
+                    </div>
+                </div>
+                <div class="slide" data-num="2">
+                    <div class="text-wrap">
+                        <p>越了解，越喜欢；</p>
+                        <p>越喜欢，越害怕。</p>
+                        <p>你转身向北，</p>
+                        <p>侧脸还是那么美，</p>
+                        <p>我用眼光去追，竟听见你的泪。</p>
+                    </div>
+                </div>
+                <div class="slide" data-num="3">
+                    <div class="text-wrap">
+                        <p>置身在灯红酒绿的城市，</p>
+                        <p>站在车水马龙的街道，</p>
+                        <p>灯光的美，</p>
+                        <p>夜晚的静，</p>
+                        <p>更加衬托出了人们的寂寞。</p>
+                    </div>
+                </div>
+                <div class="slide" data-num="4">
+                    <div class="text-wrap">
+                        <p>从此故乡再无春秋，</p>
+                        <p>从此青春再无当时。</p>
+                        <p>你爱诗歌，我便学着写作；</p>
+                        <p>你爱远方，我便离开故乡。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="top-wrap">
+            <div class="main-top">
+                <div class="left-logo">
+                    <img src="" alt="logo" />
+                    <span>不一样的世界</span>
+                </div>
+                <ul class="right-nav">
+                    <li><a href="//luckykun.com/categories/life/">生活随笔</a></li>
+                    <li><a href="//luckykun.com/demo/">实例DEMO</a></li>
+                    <li><a href="//luckykun.com/archives/">所有文章</a></li>
+                </ul>
+            </div>
+        </div>
+        <p class="welcome-info">欢迎您，您是本站第 <span style="color:#ef7522">0</span> 位访客</p>
+        <div class="left-shadow"></div>
+        <div class="right-shadow"></div>
+        <a href="javascript:;" id="btn-begin-blog">Let's Begin</a>
+    </div>
   <div id="container">
     <div class="left-col">
-    <div class="overlay"></div>
+    <div class="overlay">
+
+	<a href="/" class="profilepic">
+		
+		<img lazy-src="/img/user.png" class="js-avatar">
+		
+	</a>
+
+	<div class="search-wrap">
+		<span title="点击显示搜索框"><i class="search-icon"></i></span>
+		<input class="search-txt" type="text" placeholder="输入文章标题按回车键搜索" />
+	</div>
+	<div class="search-result">
+		<ul>
+
+		</ul>
+	</div>
+
+</div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="/" class="profilepic">
-			
-			<img lazy-src="/img.png" class="js-avatar">
-			
-		</a>
 
 		<hgroup>
 		  <h1 class="header-author"><a href="/">luckykun</a></h1>
@@ -107,9 +177,7 @@
 				        
 							<li><a href="/demo/">demo</a></li>
 				        
-							<li><a href="/categories/simomo/">丝茉茉</a></li>
-				        
-							<li><a href="/photos">相册</a></li>
+							<li><a href="/categories/life/">生活</a></li>
 				        
 						</ul>
 					</nav>
@@ -131,7 +199,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/angular/" style="font-size: 10px;">angular</a> <a href="/tags/demo/" style="font-size: 15px;">demo</a> <a href="/tags/es6/" style="font-size: 10px;">es6</a> <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/hexo系列/" style="font-size: 15px;">hexo系列</a> <a href="/tags/highcharts/" style="font-size: 10px;">highcharts</a> <a href="/tags/javascript/" style="font-size: 15px;">javascript</a> <a href="/tags/react/" style="font-size: 10px;">react</a> <a href="/tags/微信分享/" style="font-size: 10px;">微信分享</a> <a href="/tags/插件/" style="font-size: 15px;">插件</a> <a href="/tags/教程/" style="font-size: 20px;">教程</a> <a href="/tags/构建/" style="font-size: 10px;">构建</a> <a href="/tags/编辑器/" style="font-size: 10px;">编辑器</a>
+						<a href="/tags/3D效果/" style="font-size: 10px;">3D效果</a> <a href="/tags/CSS3/" style="font-size: 15px;">CSS3</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/angular/" style="font-size: 10px;">angular</a> <a href="/tags/canvas/" style="font-size: 12.5px;">canvas</a> <a href="/tags/demo/" style="font-size: 17.5px;">demo</a> <a href="/tags/es6/" style="font-size: 12.5px;">es6</a> <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/hexo系列/" style="font-size: 15px;">hexo系列</a> <a href="/tags/highcharts/" style="font-size: 10px;">highcharts</a> <a href="/tags/html5/" style="font-size: 12.5px;">html5</a> <a href="/tags/javascript/" style="font-size: 15px;">javascript</a> <a href="/tags/react/" style="font-size: 12.5px;">react</a> <a href="/tags/实例/" style="font-size: 10px;">实例</a> <a href="/tags/微信分享/" style="font-size: 10px;">微信分享</a> <a href="/tags/插件/" style="font-size: 12.5px;">插件</a> <a href="/tags/教程/" style="font-size: 20px;">教程</a> <a href="/tags/文件上传/" style="font-size: 10px;">文件上传</a> <a href="/tags/构建/" style="font-size: 10px;">构建</a> <a href="/tags/编辑器/" style="font-size: 10px;">编辑器</a>
 					</div>
 				</section>
 				
@@ -166,7 +234,7 @@
 		<header id="header" class="inner">
 			<div class="profilepic">
 			
-				<img lazy-src="/img.png" class="js-avatar">
+				<img lazy-src="/img/user.png" class="js-avatar">
 			
 			</div>
 			<hgroup>
@@ -184,9 +252,7 @@
 		        
 					<li><a href="/demo/">demo</a></li>
 		        
-					<li><a href="/categories/simomo/">丝茉茉</a></li>
-		        
-					<li><a href="/photos">相册</a></li>
+					<li><a href="/categories/life/">生活</a></li>
 		        
 		        <div class="clearfix"></div>
 				</ul>
@@ -270,6 +336,11 @@
 <a id="more"></a>
 <p>可能有人会说了，使用svn或者git这种版本控制工具呀，大家down一套代码，在一起开发不就好了。我想说的是，代码虽然有了，但是对于服务端同学的那一套复杂的环境，有兴趣或者涉猎还好，如果没有，自己去启个java环境估计都得花上半天时间吧。</p>
 <p>此时你会深深的感受到了那句名言的魅力，<code>时间就是金钱！</code>后来我发现，现在的web开发，谁还用这种低级的方法，大家都已经开始搞<code>前后端分离了</code>！</p>
+<p>本篇文章会讲述搭建一个基于<code>grunt+require+angular</code>完整的前端项目的过程，<code>本项目主要在于项目结构和思路，具体功能可以在此基础上进一步开发</code>。最后完整的代码，你可以在Github上看到<a href="https://github.com/luckykun/grunt-require-angular/tree/master" target="_blank" rel="external">完整代码点这里</a>，喜欢的同学不妨帮我<code>star一下</code>，谢谢^_^。</p>
+<p>down下来运行以下命令就可以直接看到效果：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">npm install grunt -g</div><div class="line">npm install   <span class="comment">//安装依赖</span></div><div class="line">grunt  <span class="comment">//启动服务</span></div></pre></td></tr></table></figure>
+<p>最后页面上的结果是：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">hello, world</div></pre></td></tr></table></figure>
 <h1 id="前后端分离的目的和作用"><a href="#前后端分离的目的和作用" class="headerlink" title="前后端分离的目的和作用"></a>前后端分离的目的和作用</h1><blockquote>
 <p>要弄清前后端分离的目的和作用，首先要知道什么是前后端分离。</p>
 </blockquote>
@@ -283,38 +354,38 @@
 <li>angularJs: js前端MVC框架，支持依赖注入、双向绑定等主要特性。</li>
 </ul>
 <p>这几个库是现在中大型前端项目比较适合的搭配，很有必要去学习并掌握他们。</p>
-<h2 id="创建项目目录"><a href="#创建项目目录" class="headerlink" title="创建项目目录"></a>创建项目目录</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">mkdir myProject</span><br><span class="line">cd myProject</span><br></pre></td></tr></table></figure>
+<h2 id="创建项目目录"><a href="#创建项目目录" class="headerlink" title="创建项目目录"></a>创建项目目录</h2><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">mkdir myProject</div><div class="line">cd myProject</div></pre></td></tr></table></figure>
 <p>创建项目文件夹，然后进入文件夹，一下操作均在此文件夹下执行。</p>
 <h2 id="创建package-json"><a href="#创建package-json" class="headerlink" title="创建package.json"></a>创建package.json</h2><p><code>首先我们需要为npm提供一个package.json，告诉它我们的项目信息，特别是项目中将会使用的插件。</code></p>
 <p>可以用命令生成，后续也能够手动修改。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">npm init</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">npm init</div></pre></td></tr></table></figure>
 <p>他会问我们一些问题，一路使用默认值，创建完毕。</p>
-<h2 id="安装grunt"><a href="#安装grunt" class="headerlink" title="安装grunt"></a>安装grunt</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">npm install grunt --save-dev</span><br></pre></td></tr></table></figure>
+<h2 id="安装grunt"><a href="#安装grunt" class="headerlink" title="安装grunt"></a>安装grunt</h2><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">npm install grunt --save-dev</div></pre></td></tr></table></figure>
 <p>使用npm安装grunt插件，它将被安装到根目录的<code>node_modules</code>文件夹下，所有npm插件都会放到这里。</p>
 <p><code>--save-dev</code>： 意思是安装插件的同时，也把它添加到项目信息文件<code>package.json</code>中的<code>devDependencies</code>字段里，意思是这个项目依赖于这些插件。下次使用<code>npm install</code>的时候就会自动安装这些插件。</p>
 <h2 id="为grunt创建配置文件Gruntfile-js"><a href="#为grunt创建配置文件Gruntfile-js" class="headerlink" title="为grunt创建配置文件Gruntfile.js"></a>为grunt创建配置文件Gruntfile.js</h2><p>Gruntfile.js文件用于定义任务、任务组。它可以用来执行文件的类型转换、压缩、合并等等操作，为开发大大提高了效率。</p>
 <ul>
 <li><p>安装grunt-init</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">npm install grunt-init -g      <span class="comment">//全局安装grunt-init</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">npm install grunt-init -g      <span class="comment">//全局安装grunt-init</span></div></pre></td></tr></table></figure>
 </li>
 <li><p>下载grunt模板</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">git clone https:<span class="comment">//github.com/gruntjs/grunt-init-gruntfile.git ~/.grunt-init/gruntfile</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">git clone https:<span class="comment">//github.com/gruntjs/grunt-init-gruntfile.git ~/.grunt-init/gruntfile</span></div></pre></td></tr></table></figure>
 </li>
 <li><p>生成Gruntfile</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">grunt-init gruntfile</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">grunt-init gruntfile</div></pre></td></tr></table></figure>
 <p>  在项目根目录下生成Gruntfile.js文件，跟package.json文件一下，按需回答一些文件，就创建好了，后续能手动修改（其实大部分都是自己手写的）。</p>
 </li>
 </ul>
 <h2 id="安装bower"><a href="#安装bower" class="headerlink" title="安装bower"></a>安装bower</h2><p>bower是用来管理js库的一个工具，比如下载jquery、angularjs等库。并且下载的时候还能指定库的版本。</p>
 <p>同样适用npm进行安装。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">npm install bower -g</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">npm install bower -g</div></pre></td></tr></table></figure>
 <h2 id="为bower生成配置文件bower-json"><a href="#为bower生成配置文件bower-json" class="headerlink" title="为bower生成配置文件bower.json"></a>为bower生成配置文件bower.json</h2><p>整个项目的信息文件是<code>package.json</code>，执行任务插件grunt的信息文件是<code>Gruntfile.js</code>，那么bower当然也有自己的信息文件了，那就是<code>bower.json</code>。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">bower init</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">bower init</div></pre></td></tr></table></figure>
 <p>不过我觉得bower.json基本没有什么作用，它最大的作用就是用来下载我们需要的各种技术库。</p>
 <p>比如使用bower下载angularjs：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">bower install angularjs</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">bower install angularjs</div></pre></td></tr></table></figure>
 <p>这行命令将会把angular下载下来，放在根目录下的<code>bower_components</code>文件夹下，不过它默认下载的是angular的最新版，有时候，我们可能不需要最新版。假如，我想下载angularjs 1.2.2版本该怎么办呢？</p>
-<figure class="highlight"><table><tr><td class="code"><pre><span class="line">bower install angularjs#1.2.2</span><br></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="code"><pre><div class="line">bower install angularjs#1.2.2</div></pre></td></tr></table></figure>
 <p>另外，bower只负责下载文件到<code>bower_components</code>目录下，但是我们项目中可能并不想把库放在这里，所以我们可以选择使用grunt的插件<code>grunt-bower-task</code>，在Gruntfile.js中定义一个任务来移动文件到想要的目录下。</p>
 <h2 id="关于Requirejs"><a href="#关于Requirejs" class="headerlink" title="关于Requirejs"></a>关于Requirejs</h2><p>官网上是这样说的：</p>
 <blockquote>
@@ -323,7 +394,7 @@
 <p>它使用了不同于传统的脚本加载步骤。可以用它来加速、优化代码，但其主要目的还是为了代码的模块化，按需加载。</p>
 <h2 id="使用Requirejs"><a href="#使用Requirejs" class="headerlink" title="使用Requirejs"></a>使用Requirejs</h2><p><code>&lt;script data-main=&quot;scripts/main&quot; src=&quot;scripts/require.js&quot;&gt;&lt;/script&gt;</code></p>
 <p>一般在首页加载requiejs文件，然后属性<code>data-main</code>指定的文件就是接下来要加载的文件，然后我们再看<code>main.js</code>文件:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">require</span>.config(&#123;</span><br><span class="line">    baseUrl: <span class="string">'script/lib'</span>,</span><br><span class="line">    paths: &#123;</span><br><span class="line">        app: <span class="string">'app'</span>,</span><br><span class="line">        jquery: <span class="string">'/jquery/jquery-min'</span>,</span><br><span class="line">        angular: <span class="string">'/angularjs/angular-min'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    shim: &#123;</span><br><span class="line">        <span class="string">'angular'</span>: &#123;</span><br><span class="line">            exports: <span class="string">'angular'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">require</span>([</span><br><span class="line">    <span class="string">'app'</span></span><br><span class="line">], <span class="function"><span class="keyword">function</span>(<span class="params">app</span>) (<span class="params"></span><br><span class="line">    app.hello(</span>);</span><br><span class="line">))</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="built_in">require</span>.config(&#123;</div><div class="line">    baseUrl: <span class="string">'script/lib'</span>,</div><div class="line">    paths: &#123;</div><div class="line">        app: <span class="string">'app'</span>,</div><div class="line">        jquery: <span class="string">'/jquery/jquery-min'</span>,</div><div class="line">        angular: <span class="string">'/angularjs/angular-min'</span></div><div class="line">    &#125;,</div><div class="line">    shim: &#123;</div><div class="line">        <span class="string">'angular'</span>: &#123;</div><div class="line">            exports: <span class="string">'angular'</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"><span class="built_in">require</span>([</div><div class="line">    <span class="string">'app'</span></div><div class="line">], <span class="function"><span class="keyword">function</span>(<span class="params">app</span>) (<span class="params"></span></span></div><div class="line">    app.hello();</div><div class="line">))</div></pre></td></tr></table></figure>
 <ul>
 <li>我们在<code>paths</code>中声明了3个模块，app、jquery和angular，后面的路径是模块对应的文件路径。</li>
 <li><code>shim</code>中用来处理一些没有遵守requirejs规范的js库，比如angularjs库，所以要手动配置一个叫<code>angular</code>的模块。</li>
@@ -358,23 +429,24 @@
 </li>
 </ul>
 <p>目录创建好了，现在来写一些代码，让项目能够运行起来。</p>
-<h2 id="views-index-html"><a href="#views-index-html" class="headerlink" title="views/index.html"></a>views/index.html</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>grunt+requirejs+angular项目构建<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../scripts/vendor/requirejs/require.js"</span> <span class="attr">data-main</span>=<span class="string">"../scripts/config"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span>    <span class="comment">&lt;!-- 先引入requirejs, 然后引入config.js --&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-controller</span>=<span class="string">"testController"</span>&gt;</span></span><br><span class="line">        &#123;&#123;app&#125;&#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h2 id="views-index-html"><a href="#views-index-html" class="headerlink" title="views/index.html"></a>views/index.html</h2><figure class="highlight html"><table><tr><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>grunt+requirejs+angular项目构建<span class="tag">&lt;/<span class="name">title</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"../scripts/vendor/requirejs/require.js"</span> <span class="attr">data-main</span>=<span class="string">"../scripts/config"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span>    <span class="comment">&lt;!-- 先引入requirejs, 然后引入config.js --&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">ng-controller</span>=<span class="string">"testController"</span>&gt;</span></div><div class="line">        &#123;&#123;app&#125;&#125;</div><div class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
 <p>上述index中，先引入了require.js，然后加载data-main对应的config.js文件。</p>
-<h2 id="scripts-config-js"><a href="#scripts-config-js" class="headerlink" title="scripts/config.js"></a>scripts/config.js</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> vendorPath = <span class="string">'vendor/'</span>;</span><br><span class="line"><span class="built_in">require</span>.config(&#123;    <span class="comment">//配置模块</span></span><br><span class="line">    baseUrl: <span class="string">'../scripts/'</span>,</span><br><span class="line">    paths: &#123;</span><br><span class="line">        <span class="string">'app'</span>: <span class="string">'app'</span>,</span><br><span class="line">        <span class="string">'angular'</span>: vendorPath + <span class="string">'angular/angular'</span>,</span><br><span class="line">        <span class="string">'jquery'</span>: vendorPath + <span class="string">'jquery/jquery'</span></span><br><span class="line">    &#125;,</span><br><span class="line">    shim: &#123;   <span class="comment">//处理没有遵守requirejs规范的js库</span></span><br><span class="line">        <span class="string">'angular'</span>: &#123;</span><br><span class="line">            exports: <span class="string">'angular'</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"><span class="built_in">require</span>([<span class="string">'./bootstrap'</span>], <span class="function"><span class="keyword">function</span>(<span class="params">bootstrap</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="scripts-config-js"><a href="#scripts-config-js" class="headerlink" title="scripts/config.js"></a>scripts/config.js</h2><figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> vendorPath = <span class="string">'vendor/'</span>;</div><div class="line"><span class="built_in">require</span>.config(&#123;    <span class="comment">//配置模块</span></div><div class="line">    baseUrl: <span class="string">'../scripts/'</span>,</div><div class="line">    paths: &#123;</div><div class="line">        <span class="string">'app'</span>: <span class="string">'app'</span>,</div><div class="line">        <span class="string">'angular'</span>: vendorPath + <span class="string">'angular/angular'</span>,</div><div class="line">        <span class="string">'jquery'</span>: vendorPath + <span class="string">'jquery/jquery'</span></div><div class="line">    &#125;,</div><div class="line">    shim: &#123;   <span class="comment">//处理没有遵守requirejs规范的js库</span></div><div class="line">        <span class="string">'angular'</span>: &#123;</div><div class="line">            exports: <span class="string">'angular'</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"><span class="built_in">require</span>([<span class="string">'./bootstrap'</span>], <span class="function"><span class="keyword">function</span>(<span class="params">bootstrap</span>) </span>&#123;</div><div class="line">    <span class="comment">// ...</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <p>然后通过require引入了bootstrap.js文件。</p>
-<h2 id="scripts-bootstrap-js"><a href="#scripts-bootstrap-js" class="headerlink" title="scripts/bootstrap.js"></a>scripts/bootstrap.js</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">define([</span><br><span class="line">    <span class="string">'angular'</span>,</span><br><span class="line">    <span class="string">'app'</span>,</span><br><span class="line">    <span class="string">'jquery'</span>,</span><br><span class="line">    <span class="string">'./controller/_base'</span></span><br><span class="line">], <span class="function"><span class="keyword">function</span>(<span class="params">angular</span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 手动将angular模块绑定到document对象</span></span><br><span class="line">    angular.element(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        angular.bootstrap(<span class="built_in">document</span>, [<span class="string">'myProject'</span>]);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="scripts-bootstrap-js"><a href="#scripts-bootstrap-js" class="headerlink" title="scripts/bootstrap.js"></a>scripts/bootstrap.js</h2><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">define([</div><div class="line">    <span class="string">'angular'</span>,</div><div class="line">    <span class="string">'app'</span>,</div><div class="line">    <span class="string">'jquery'</span>,</div><div class="line">    <span class="string">'./controller/_base'</span></div><div class="line">], <span class="function"><span class="keyword">function</span>(<span class="params">angular</span>) </span>&#123;</div><div class="line">    <span class="comment">// 手动将angular模块绑定到document对象</span></div><div class="line">    angular.element(<span class="built_in">document</span>).ready(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">        angular.bootstrap(<span class="built_in">document</span>, [<span class="string">'myProject'</span>]);</div><div class="line">    &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <p><code>注意：function的内容是requirejs引入所有文件之后的回调函数。</code></p>
 <p>bootstrap是angular对象的一个方法，用于手动启动。上述代码除了引入了angular等js库外，还引入了app.js文件。</p>
-<h2 id="scripts-app-js"><a href="#scripts-app-js" class="headerlink" title="scripts/app.js"></a>scripts/app.js</h2><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">define([</span><br><span class="line">    <span class="string">'angular'</span>,</span><br><span class="line">    <span class="string">'./controller/controllers'</span></span><br><span class="line">], <span class="function"><span class="keyword">function</span>(<span class="params">angular</span>) </span>&#123;</span><br><span class="line">    <span class="comment">//定义将要绑定到document上的模块名称</span></span><br><span class="line">    <span class="keyword">return</span> angular.module(<span class="string">'myProject'</span>, [<span class="string">'projectController'</span>]);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h2 id="scripts-app-js"><a href="#scripts-app-js" class="headerlink" title="scripts/app.js"></a>scripts/app.js</h2><figure class="highlight js"><table><tr><td class="code"><pre><div class="line">define([</div><div class="line">    <span class="string">'angular'</span>,</div><div class="line">    <span class="string">'./controller/controllers'</span></div><div class="line">], <span class="function"><span class="keyword">function</span>(<span class="params">angular</span>) </span>&#123;</div><div class="line">    <span class="comment">//定义将要绑定到document上的模块名称</span></div><div class="line">    <span class="keyword">return</span> angular.module(<span class="string">'myProject'</span>, [<span class="string">'projectController'</span>]);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <p>定义模块名<code>myProject</code>的时候，同时指定它依赖于另一个模块<code>projectController</code>。</p>
 <p>同时在<code>./controller/controllers.js</code>中定义这个模块：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">define([<span class="string">'angular'</span>], <span class="function"><span class="keyword">function</span>(<span class="params">angular</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> angular.module(<span class="string">'projectController'</span>, []);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">define([<span class="string">'angular'</span>], <span class="function"><span class="keyword">function</span>(<span class="params">angular</span>) </span>&#123;</div><div class="line">    <span class="keyword">return</span> angular.module(<span class="string">'projectController'</span>, []);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <p>这里是给所有的控制器定义了一个单独的模块，然后让主要模块依赖于这个模块，这样做的目的是方便管理维护，我们还可以给所有的服务、路由、过滤器都添加一个单独的模块，然后在app.js中添加注入即可。</p>
 <h2 id="controller-testController-js"><a href="#controller-testController-js" class="headerlink" title="controller/testController.js"></a>controller/testController.js</h2><p>如果想要让视图文件<code>views/index.html</code>能够看到效果，我们就要开始编写控制器文件了，</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">define([</span><br><span class="line">    <span class="string">'./controllers'</span></span><br><span class="line">], <span class="function"><span class="keyword">function</span>(<span class="params">mod</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> controllerFn = <span class="function"><span class="keyword">function</span>(<span class="params">$scope, $location</span>) </span>&#123;</span><br><span class="line">        $scope.app = <span class="string">'hello, world'</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">    controllerFn.$inject = [<span class="string">'$scope'</span>, <span class="string">'$location'</span>];</span><br><span class="line">    mod.controller(<span class="string">'testController'</span>, controllerFn);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">define([</div><div class="line">    <span class="string">'./controllers'</span></div><div class="line">], <span class="function"><span class="keyword">function</span>(<span class="params">mod</span>) </span>&#123;</div><div class="line">    <span class="keyword">var</span> controllerFn = <span class="function"><span class="keyword">function</span>(<span class="params">$scope, $location</span>) </span>&#123;</div><div class="line">        $scope.app = <span class="string">'hello, world'</span>;</div><div class="line">    &#125;;</div><div class="line">    controllerFn.$inject = [<span class="string">'$scope'</span>, <span class="string">'$location'</span>];</div><div class="line">    mod.controller(<span class="string">'testController'</span>, controllerFn);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
 <p>引入控制器的单独模块文件’./controllers’,然后在模块上新建一个名为<code>testController</code>的控制器，并在$scope上绑定了一个值为’hello, world’的变量<code>app</code>。</p>
-<h2 id="查看效果"><a href="#查看效果" class="headerlink" title="查看效果"></a>查看效果</h2><p>使用<code>python -m SimpleHTTPServer</code>启动一个简单的web服务器，默认监听8000端口。在浏览器输入正确地址就能看到效果了。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">hello, world</span><br></pre></td></tr></table></figure>
+<h2 id="查看效果"><a href="#查看效果" class="headerlink" title="查看效果"></a>查看效果</h2><p>使用<code>grunt</code>命令启动一个简单的web服务器（前提是边编写好了Gruntfile.js文件，可以去github上看我已经写好的源码）。在浏览器就能看到效果了。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line">hello, world</div></pre></td></tr></table></figure>
+<p>注：完整的代码我已上传至github<a href="https://github.com/luckykun/grunt-require-angular/tree/master" target="_blank" rel="external">完整代码点这里</a>，喜欢的同学帮忙点个star，谢谢咯。</p>
 <h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>现在，我们需要做的就是，和服务端约定好接口格式，自己根据格式mock需要的数据，然后，我们可以随心所欲的开发我们的项目了，不用再和人打交道了。开发完毕之后，再通过grunt压缩、合并、打包文件等操作，暴露给外部的只需一个js文件，另外还可以通过git等版本管理工具来迭代项目。有了这种开发方式，你再也不用担心服务端开发随时来烦你，自己也有更多时间来钻研前端本身的技术了，哈哈。</p>
 <hr>
 
@@ -396,7 +468,7 @@
 
 <nav id="article-nav">
   
-    <a href="/work/2016-05-08/react-todo.html" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/work/2016-05-08/react-todo-demo.html" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
@@ -406,8 +478,8 @@
     </a>
   
   
-    <a href="/simomo/2016-04-23/simomo01.html" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">下一篇：一个有故事的人</div>
+    <a href="/work/2016-04-23/heoll-hexo.html" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">下一篇：hexo搭建属于自己的博客</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -481,8 +553,8 @@
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-            <span id="busuanzi_container_site_uv" style="color:#ef7522">
-                本站共访问次数：<span id="busuanzi_value_site_uv">0</span>次
+            <span id="busuanzi_container_site_uv" style="color:#333;font-size:13px;">
+                本站到目前为止已有<span id="busuanzi_value_site_uv" style="color:#ef7522">0</span>人留下脚印
             </span>
     	</div>
       	<div class="footer-right">
@@ -511,7 +583,7 @@
 		open_in_new: false
 	}
 </script>
-<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/require,jquery.min.js"></script>
 <script src="/js/main.js"></script>
 
 
@@ -540,8 +612,9 @@ MathJax.Hub.Queue(function() {
 </script>
 
 
+
   </div>
   <div class="go-top"></div>
-   <script src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script src="/js/busuanzi.min.js"></script>
 </body>
 </html>

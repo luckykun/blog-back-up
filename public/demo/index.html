@@ -23,7 +23,7 @@ demo地址：查看">
 实例1. react-todosreact技术现在在前端界是炙手可热的话题，所以我们也得紧跟潮流。最近在学习的过程中，也顺便了解了下webpack打包管理工具和es6的语法，然后使用react+webpack编写了一个todo-list的应用，使用localstorage存储任务数据。
 
 demo地址：查看">
-<meta property="og:updated_time" content="2016-05-21T09:01:40.620Z">
+<meta property="og:updated_time" content="2016-08-07T13:32:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="学习折腾出的实例demo">
 <meta name="twitter:description" content="编程写代码是一门艺术，特别是对于前端，总觉得需要做出点什么看得见的，才会有成就感。
@@ -35,7 +35,6 @@ demo地址：查看">
   
   
       <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=0.5.0" />
-    <!-- <link rel="icon" href="/favicon.ico?v=0.5.0"> -->
   
   <link rel="stylesheet" href="/css/style.css">
 
@@ -51,16 +50,87 @@ demo地址：查看">
 </head>
 
 <body>
+    <div id="overviews">
+        <div id="slider-wrap">
+            <div class="sliders">
+                <div class="slide" data-num="1">
+                    <div class="text-wrap">
+                        <p>神灯神灯，我有一个愿望，</p>
+                        <p>我不要金钱、权利；</p>
+                        <p>也不要长生、不老。</p>
+                        <p>我只想要遇到一个女孩，</p>
+                        <p>能陪着她哭，陪着她笑，陪她一起细水长流。</p>
+                    </div>
+                </div>
+                <div class="slide" data-num="2">
+                    <div class="text-wrap">
+                        <p>越了解，越喜欢；</p>
+                        <p>越喜欢，越害怕。</p>
+                        <p>你转身向北，</p>
+                        <p>侧脸还是那么美，</p>
+                        <p>我用眼光去追，竟听见你的泪。</p>
+                    </div>
+                </div>
+                <div class="slide" data-num="3">
+                    <div class="text-wrap">
+                        <p>置身在灯红酒绿的城市，</p>
+                        <p>站在车水马龙的街道，</p>
+                        <p>灯光的美，</p>
+                        <p>夜晚的静，</p>
+                        <p>更加衬托出了人们的寂寞。</p>
+                    </div>
+                </div>
+                <div class="slide" data-num="4">
+                    <div class="text-wrap">
+                        <p>从此故乡再无春秋，</p>
+                        <p>从此青春再无当时。</p>
+                        <p>你爱诗歌，我便学着写作；</p>
+                        <p>你爱远方，我便离开故乡。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="top-wrap">
+            <div class="main-top">
+                <div class="left-logo">
+                    <img src="" alt="logo" />
+                    <span>不一样的世界</span>
+                </div>
+                <ul class="right-nav">
+                    <li><a href="//luckykun.com/categories/life/">生活随笔</a></li>
+                    <li><a href="//luckykun.com/demo/">实例DEMO</a></li>
+                    <li><a href="//luckykun.com/archives/">所有文章</a></li>
+                </ul>
+            </div>
+        </div>
+        <p class="welcome-info">欢迎您，您是本站第 <span style="color:#ef7522">0</span> 位访客</p>
+        <div class="left-shadow"></div>
+        <div class="right-shadow"></div>
+        <a href="javascript:;" id="btn-begin-blog">Let's Begin</a>
+    </div>
   <div id="container">
     <div class="left-col">
-    <div class="overlay"></div>
+    <div class="overlay">
+
+	<a href="/" class="profilepic">
+		
+		<img lazy-src="/img/user.png" class="js-avatar">
+		
+	</a>
+
+	<div class="search-wrap">
+		<span title="点击显示搜索框"><i class="search-icon"></i></span>
+		<input class="search-txt" type="text" placeholder="输入文章标题按回车键搜索" />
+	</div>
+	<div class="search-result">
+		<ul>
+
+		</ul>
+	</div>
+
+</div>
 <div class="intrude-less">
 	<header id="header" class="inner">
-		<a href="/" class="profilepic">
-			
-			<img lazy-src="/img.png" class="js-avatar">
-			
-		</a>
 
 		<hgroup>
 		  <h1 class="header-author"><a href="/">luckykun</a></h1>
@@ -120,9 +190,7 @@ demo地址：查看">
 				        
 							<li><a href="/demo/">demo</a></li>
 				        
-							<li><a href="/categories/simomo/">丝茉茉</a></li>
-				        
-							<li><a href="/photos">相册</a></li>
+							<li><a href="/categories/life/">生活</a></li>
 				        
 						</ul>
 					</nav>
@@ -144,7 +212,7 @@ demo地址：查看">
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/angular/" style="font-size: 10px;">angular</a> <a href="/tags/demo/" style="font-size: 15px;">demo</a> <a href="/tags/es6/" style="font-size: 10px;">es6</a> <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/hexo系列/" style="font-size: 15px;">hexo系列</a> <a href="/tags/highcharts/" style="font-size: 10px;">highcharts</a> <a href="/tags/javascript/" style="font-size: 15px;">javascript</a> <a href="/tags/react/" style="font-size: 10px;">react</a> <a href="/tags/微信分享/" style="font-size: 10px;">微信分享</a> <a href="/tags/插件/" style="font-size: 15px;">插件</a> <a href="/tags/教程/" style="font-size: 20px;">教程</a> <a href="/tags/构建/" style="font-size: 10px;">构建</a> <a href="/tags/编辑器/" style="font-size: 10px;">编辑器</a>
+						<a href="/tags/3D效果/" style="font-size: 10px;">3D效果</a> <a href="/tags/CSS3/" style="font-size: 15px;">CSS3</a> <a href="/tags/ajax/" style="font-size: 10px;">ajax</a> <a href="/tags/angular/" style="font-size: 10px;">angular</a> <a href="/tags/canvas/" style="font-size: 12.5px;">canvas</a> <a href="/tags/demo/" style="font-size: 17.5px;">demo</a> <a href="/tags/es6/" style="font-size: 12.5px;">es6</a> <a href="/tags/grunt/" style="font-size: 10px;">grunt</a> <a href="/tags/hexo系列/" style="font-size: 15px;">hexo系列</a> <a href="/tags/highcharts/" style="font-size: 10px;">highcharts</a> <a href="/tags/html5/" style="font-size: 12.5px;">html5</a> <a href="/tags/javascript/" style="font-size: 15px;">javascript</a> <a href="/tags/react/" style="font-size: 12.5px;">react</a> <a href="/tags/实例/" style="font-size: 10px;">实例</a> <a href="/tags/微信分享/" style="font-size: 10px;">微信分享</a> <a href="/tags/插件/" style="font-size: 12.5px;">插件</a> <a href="/tags/教程/" style="font-size: 20px;">教程</a> <a href="/tags/文件上传/" style="font-size: 10px;">文件上传</a> <a href="/tags/构建/" style="font-size: 10px;">构建</a> <a href="/tags/编辑器/" style="font-size: 10px;">编辑器</a>
 					</div>
 				</section>
 				
@@ -179,7 +247,7 @@ demo地址：查看">
 		<header id="header" class="inner">
 			<div class="profilepic">
 			
-				<img lazy-src="/img.png" class="js-avatar">
+				<img lazy-src="/img/user.png" class="js-avatar">
 			
 			</div>
 			<hgroup>
@@ -197,9 +265,7 @@ demo地址：查看">
 		        
 					<li><a href="/demo/">demo</a></li>
 		        
-					<li><a href="/categories/simomo/">丝茉茉</a></li>
-		        
-					<li><a href="/photos">相册</a></li>
+					<li><a href="/categories/life/">生活</a></li>
 		        
 		        <div class="clearfix"></div>
 				</ul>
@@ -265,7 +331,7 @@ demo地址：查看">
     <div id="toc" class="toc-article">
     <span class="toc-close" title="隐藏导航">×</span>
     <!-- <strong class="toc-title">文章目录</strong> -->
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#实例1-react-todos"><span class="toc-number">1.</span> <span class="toc-text">实例1. react-todos</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实例2-highextend图表"><span class="toc-number">2.</span> <span class="toc-text">实例2. highextend图表</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#实例1-react-todos"><span class="toc-number">1.</span> <span class="toc-text">实例1. react-todos</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实例2-highextend图表"><span class="toc-number">2.</span> <span class="toc-text">实例2. highextend图表</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实例3-tinyHeart游戏"><span class="toc-number">3.</span> <span class="toc-text">实例3. tinyHeart游戏</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实例4-3D立方体效果"><span class="toc-number">4.</span> <span class="toc-text">实例4. 3D立方体效果</span></a></li></ol>
     </div>
     
     <div class="article-entry" itemprop="articleBody">
@@ -277,13 +343,23 @@ demo地址：查看">
 <hr>
 <h1 id="实例1-react-todos"><a href="#实例1-react-todos" class="headerlink" title="实例1. react-todos"></a>实例1. react-todos</h1><p>react技术现在在前端界是炙手可热的话题，所以我们也得紧跟潮流。最近在学习的过程中，也顺便了解了下webpack打包管理工具和es6的语法，然后使用react+webpack编写了一个todo-list的应用，使用localstorage存储任务数据。</p>
 <ul>
-<li>demo地址：<a href="/work/2016-05-08/react-todo.html">查看demo地址</a></li>
+<li>demo地址：<a href="/work/2016-05-08/react-todo-demo.html">查看demo地址</a></li>
 <li>代码地址：<a href="https://github.com/luckykun/react-demo" target="_blank" rel="external">View on GitHub</a></li>
 </ul>
 <h1 id="实例2-highextend图表"><a href="#实例2-highextend图表" class="headerlink" title="实例2. highextend图表"></a>实例2. highextend图表</h1><p>highextend是基于highcharts和原生js进一步封装的图表组件，组件暴露一个<code>Hxt</code>的全局对象，它有自己的一套默认图表样式，而暴露了我们会经常用到的配置项，另外，还提供了很多个方法来绘制不同的图表，妈妈再也不用担心绘制图表的需求啦！哈哈！。</p>
 <ul>
 <li>demo地址：<a href="/work/2016-05-12/high-extend.html">查看demo地址</a></li>
 <li>代码地址：<a href="https://github.com/luckykun/highextend" target="_blank" rel="external">View on GitHub</a></li>
+</ul>
+<h1 id="实例3-tinyHeart游戏"><a href="#实例3-tinyHeart游戏" class="headerlink" title="实例3. tinyHeart游戏"></a>实例3. tinyHeart游戏</h1><p>使用h5的API和canvas开发的一个小游戏。源码在github上，down下来就能直接运行。</p>
+<ul>
+<li>demo地址：<a href="/work/2016-05-30/tiny-heart-demo.html">查看demo地址</a></li>
+<li>代码地址：<a href="https://github.com/luckykun/tinyHeart" target="_blank" rel="external">View on GitHub</a></li>
+</ul>
+<h1 id="实例4-3D立方体效果"><a href="#实例4-3D立方体效果" class="headerlink" title="实例4. 3D立方体效果"></a>实例4. 3D立方体效果</h1><p>使用CSS3的transform属性实现的一个3D立方体的效果，换上照片再加上旋转的动画，真的是酷炫吊炸天！不信就点下面的demo地址。</p>
+<ul>
+<li>demo地址：<a href="/work/2016-07-24/rect-grid-demo.html">查看demo地址</a></li>
+<li>代码地址：直接在demo页面右键查看源码，就能看到全部代码了。另外你还可以移步到这个demo的制作教程<a href="/work/2016-07-23/css3-study02.html">CSS3 3D立方体效果－transform也不过如此</a></li>
 </ul>
 <hr>
 
@@ -371,8 +447,8 @@ demo地址：查看">
   <div class="outer">
     <div id="footer-info">
     	<div class="footer-left">
-            <span id="busuanzi_container_site_uv" style="color:#ef7522">
-                本站共访问次数：<span id="busuanzi_value_site_uv">0</span>次
+            <span id="busuanzi_container_site_uv" style="color:#333;font-size:13px;">
+                本站到目前为止已有<span id="busuanzi_value_site_uv" style="color:#ef7522">0</span>人留下脚印
             </span>
     	</div>
       	<div class="footer-right">
@@ -401,7 +477,7 @@ demo地址：查看">
 		open_in_new: false
 	}
 </script>
-<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/require,jquery.min.js"></script>
 <script src="/js/main.js"></script>
 
 
@@ -430,8 +506,9 @@ MathJax.Hub.Queue(function() {
 </script>
 
 
+
   </div>
   <div class="go-top"></div>
-   <script src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <script src="/js/busuanzi.min.js"></script>
 </body>
 </html>

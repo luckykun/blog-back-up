@@ -20,6 +20,22 @@ toc: true
 
 此时你会深深的感受到了那句名言的魅力，`时间就是金钱！`后来我发现，现在的web开发，谁还用这种低级的方法，大家都已经开始搞`前后端分离了`！
 
+本篇文章会讲述搭建一个基于`grunt+require+angular`完整的前端项目的过程，`本项目主要在于项目结构和思路，具体功能可以在此基础上进一步开发`。最后完整的代码，你可以在Github上看到[完整代码点这里](https://github.com/luckykun/grunt-require-angular/tree/master)，喜欢的同学不妨帮我`star一下`，谢谢^_^。
+
+down下来运行以下命令就可以直接看到效果：
+
+```js
+npm install grunt -g
+npm install   //安装依赖
+grunt  //启动服务
+```
+
+最后页面上的结果是：
+
+```js
+hello, world
+```
+
 # 前后端分离的目的和作用
 
 > 要弄清前后端分离的目的和作用，首先要知道什么是前后端分离。
@@ -291,11 +307,13 @@ define([
 引入控制器的单独模块文件'./controllers',然后在模块上新建一个名为`testController`的控制器，并在$scope上绑定了一个值为'hello, world'的变量`app`。
 
 ## 查看效果
-使用`python -m SimpleHTTPServer`启动一个简单的web服务器，默认监听8000端口。在浏览器输入正确地址就能看到效果了。
+使用`grunt`命令启动一个简单的web服务器（前提是边编写好了Gruntfile.js文件，可以去github上看我已经写好的源码）。在浏览器就能看到效果了。
 
 ```js
 hello, world
 ```
+
+注：完整的代码我已上传至github[完整代码点这里](https://github.com/luckykun/grunt-require-angular/tree/master)，喜欢的同学帮忙点个star，谢谢咯。
 
 # 结语
 现在，我们需要做的就是，和服务端约定好接口格式，自己根据格式mock需要的数据，然后，我们可以随心所欲的开发我们的项目了，不用再和人打交道了。开发完毕之后，再通过grunt压缩、合并、打包文件等操作，暴露给外部的只需一个js文件，另外还可以通过git等版本管理工具来迭代项目。有了这种开发方式，你再也不用担心服务端开发随时来烦你，自己也有更多时间来钻研前端本身的技术了，哈哈。
