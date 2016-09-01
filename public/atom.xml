@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-08-16T16:40:08.000Z</updated>
+  <updated>2016-09-01T04:07:08.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -14,6 +14,234 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>开发自己的yeoman脚手架（generator-reactpackage）</title>
+    <link href="http://yoursite.com/work/2016-09-01/yeoman-reactpackage.html"/>
+    <id>http://yoursite.com/work/2016-09-01/yeoman-reactpackage.html</id>
+    <published>2016-09-01T03:55:33.000Z</published>
+    <updated>2016-09-01T04:07:08.000Z</updated>
+    
+    <content type="html">&lt;hr&gt;
+&lt;p&gt;自从前后端开始分离之后，前端项目工程化也显得越来越重要了，之前写过一篇搭建基于&lt;code&gt;Angular+Requirejs+Grunt&lt;/code&gt;的前端项目教程，有兴趣的可以&lt;a href=&quot;http://luckykun.com/work/2016-05-02/grunt-angular.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;点这里去看&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;但是有些项目可以使用这种方式，但有些却不太适合，或者我们就是想要去尝试新的框架。比如最近我就尝试着使用了&lt;code&gt;webpack+react+es6&lt;/code&gt;的方式开发项目，感觉很不错，然后很多项目都用了这种方式。所以为了不需要每次开发的时候都从头开始新建文件，就想着能不能弄个工具，使用命令能够快速的生成这样一套跑的通的项目模版，正好，有个工具叫&lt;code&gt;yeoman&lt;/code&gt;。&lt;/p&gt;
+&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
+&lt;p&gt;本篇文章看点：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;教你使用&lt;code&gt;yeoman&lt;/code&gt;快速开发自己的脚手架。&lt;/li&gt;
+&lt;li&gt;介绍作者编写的&lt;code&gt;generator-reactpackage&lt;/code&gt;脚手架模版，此项目的开发基于&lt;code&gt;webpack+react+es6&lt;/code&gt;，项目功能包含：&lt;ul&gt;
+&lt;li&gt;启动本地服务，默认监听端口8888&lt;/li&gt;
+&lt;li&gt;css文件能自动补全css3属性的前缀&lt;/li&gt;
+&lt;li&gt;包含路由功能(react-router)&lt;/li&gt;
+&lt;li&gt;使用命令&lt;code&gt;npm run dev&lt;/code&gt;启动服务，修改保存文件的时候浏览器会自动刷新&lt;/li&gt;
+&lt;li&gt;如果不想要实时刷新的功能，将webpack.config.js文件的devServer配置改为inline: false&lt;/li&gt;
+&lt;li&gt;使用&lt;code&gt;npm run build&lt;/code&gt;打包文件，js和css分开打包，并且默认会压缩文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&quot;开发脚手架&quot;&gt;&lt;a href=&quot;#开发脚手架&quot; class=&quot;headerlink&quot; title=&quot;开发脚手架&quot;&gt;&lt;/a&gt;开发脚手架&lt;/h1&gt;&lt;h2 id=&quot;环境准备&quot;&gt;&lt;a href=&quot;#环境准备&quot; class=&quot;headerlink&quot; title=&quot;环境准备&quot;&gt;&lt;/a&gt;环境准备&lt;/h2&gt;&lt;p&gt;安装或者更新一下你的node和npm&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;npm install -g n  &lt;span class=&quot;comment&quot;&gt;//首先安装n模块&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;n stable   &lt;span class=&quot;comment&quot;&gt;//升级node.js到最新稳定版&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;n &lt;span class=&quot;number&quot;&gt;5.0&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.0&lt;/span&gt;   &lt;span class=&quot;comment&quot;&gt;//或者指定版本升级&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;node -v   &lt;span class=&quot;comment&quot;&gt;//检查更新是否成功&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;然后安装yeoman&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;npm install -g yo&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;创建目录&quot;&gt;&lt;a href=&quot;#创建目录&quot; class=&quot;headerlink&quot; title=&quot;创建目录&quot;&gt;&lt;/a&gt;创建目录&lt;/h2&gt;&lt;p&gt;新建一个名为&lt;code&gt;generator-xxx&lt;/code&gt;（yeoman脚手架命名规范）的文件夹，我这里叫&lt;code&gt;generator-reactpackage&lt;/code&gt;。然后在目录下执行&lt;code&gt;npm init&lt;/code&gt;创建package.json文件。修改为：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;name&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;generator-reactpackage&quot;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;version&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;0.0.4&quot;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;description&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;基于ract+webpack的项目目录快速生成器&quot;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;main&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;index.js&quot;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;scripts&quot;&lt;/span&gt;: &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;test&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;echo \&quot;Error: no test specified\&quot; &amp;amp;&amp;amp; exit 1&quot;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#125;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;repository&quot;&lt;/span&gt;: &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;type&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;git&quot;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;url&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;https://github.com/luckykun/generator-reactpackage.git&quot;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#125;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;keywords&quot;&lt;/span&gt;: [&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;yeoman-generator&quot;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  ],&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;author&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;luckykun&quot;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;license&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;MIT&quot;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;bugs&quot;&lt;/span&gt;: &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;url&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;https://github.com/luckykun/generator-reactpackage/issues&quot;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#125;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;homepage&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;https://github.com/luckykun/generator-reactpackage&quot;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;string&quot;&gt;&quot;dependencies&quot;&lt;/span&gt;: &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;chai&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;^3.3.0&quot;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;chalk&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;^1.1.1&quot;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;fs-extra&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;^0.24.0&quot;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;mocha&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;^2.3.3&quot;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;yeoman-generator&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;^0.24.1&quot;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;string&quot;&gt;&quot;yosay&quot;&lt;/span&gt;: &lt;span class=&quot;string&quot;&gt;&quot;^1.0.5&quot;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;注意：package.json的信息一定要尽可能完整，不然可能上传不到&lt;a href=&quot;http://yeoman.io/generators/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;generator-lists&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;然后在此目录下新建&lt;code&gt;generators-&amp;gt;app-&amp;gt;index.js&lt;/code&gt;，&lt;code&gt;generators-app-templates&lt;/code&gt;，如下图所示：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/tps/TB1_c8XNXXXXXcnaXXXXXXXXXXX-245-625.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;generator-reactpackage&lt;/code&gt;是整个npm包的项目文件夹。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;templates目录&lt;/code&gt;里面就是我们最后要用到的项目模版文件，里面的内容是一个完整的前端项目，可以自定义。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;index.js&lt;/code&gt;是开发脚手架的主要逻辑文件。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;开始开发&quot;&gt;&lt;a href=&quot;#开始开发&quot; class=&quot;headerlink&quot; title=&quot;开始开发&quot;&gt;&lt;/a&gt;开始开发&lt;/h2&gt;&lt;p&gt;然后编辑index.js文件：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; path = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;path&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; chalk = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;chalk&#39;&lt;/span&gt;);    &lt;span class=&quot;comment&quot;&gt;//不同颜色的info&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; util = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;util&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; yeoman = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;yeoman-generator&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; yosay = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;yosay&#39;&lt;/span&gt;);    &lt;span class=&quot;comment&quot;&gt;//yeoman弹出框&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; path = &lt;span class=&quot;built_in&quot;&gt;require&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;path&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; Reactpackage = yeoman.Base.extend(&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    info: &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.log(chalk.green(&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &lt;span class=&quot;string&quot;&gt;&#39;I am going to build your app!&#39;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        ));&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    generateBasic: &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;  &lt;span class=&quot;comment&quot;&gt;//按照自己的templates目录自定义&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.directory(&lt;span class=&quot;string&quot;&gt;&#39;src&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;src&#39;&lt;/span&gt;);    &lt;span class=&quot;comment&quot;&gt;//拷贝目录&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.directory(&lt;span class=&quot;string&quot;&gt;&#39;data&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;data&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.copy(&lt;span class=&quot;string&quot;&gt;&#39;package.json&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;package.json&#39;&lt;/span&gt;);   &lt;span class=&quot;comment&quot;&gt;//拷贝文件&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.copy(&lt;span class=&quot;string&quot;&gt;&#39;index.html&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;index.html&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.copy(&lt;span class=&quot;string&quot;&gt;&#39;README.md&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;README.md&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.copy(&lt;span class=&quot;string&quot;&gt;&#39;webpack.config.js&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;webpack.config.js&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    generateClient: &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.sourceRoot(path.join(__dirname, &lt;span class=&quot;string&quot;&gt;&#39;templates&#39;&lt;/span&gt;));&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.destinationPath(&lt;span class=&quot;string&quot;&gt;&#39;./&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    install: &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;      &lt;span class=&quot;comment&quot;&gt;//安装依赖&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.installDependencies(&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            skipInstall: &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.options[&lt;span class=&quot;string&quot;&gt;&#39;skip-install&#39;&lt;/span&gt;]&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &amp;#125;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    end: &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;this&lt;/span&gt;.log(yosay(&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &lt;span class=&quot;string&quot;&gt;&#39;Your app has been created successfully!&#39;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        ));&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;built_in&quot;&gt;module&lt;/span&gt;.exports = Reactpackage;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;上面这个文件就是主要逻辑部分了。至于具体的语法，可以参考这篇文章。&lt;a href=&quot;http://www.07net01.com/2016/01/1179066.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;快速搭建基于yeoman快速编写脚手架工具&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&quot;上传&quot;&gt;&lt;a href=&quot;#上传&quot; class=&quot;headerlink&quot; title=&quot;上传&quot;&gt;&lt;/a&gt;上传&lt;/h2&gt;&lt;p&gt;开发完成之后，我们就可以将&lt;code&gt;generator-reactpackage&lt;/code&gt;这个项目上传到npm官网。步骤如下：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;npm adduser  &lt;span class=&quot;comment&quot;&gt;//如果没有账号，用此命令注册&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;npm login   &lt;span class=&quot;comment&quot;&gt;//如果有账号，用此命令登陆&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;npm publish --access=public     &lt;span class=&quot;comment&quot;&gt;//上传到npm官网&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;上传成功后会提示：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;+ generator-reactpackage@&lt;span class=&quot;number&quot;&gt;0.0&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.4&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;然后你可以访问&lt;a href=&quot;http://yeoman.io/generators/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://yeoman.io/generators/&lt;/a&gt;这里去搜索一下自己的包，有没有上传成功，比如搜索&lt;code&gt;reactpackage&lt;/code&gt;就会出现我上传的脚手架。如下图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/tps/TB1OtpiNXXXXXaKXVXXXXXXXXXX-1136-337.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;注意：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;上传到npm官网之前需要先将脚手架项目上传到github&lt;/li&gt;
+&lt;li&gt;脚手架项目的package.json文件一定要尽可能详细，比如git主页，readme文件链接等等&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;如果你能搜到自己上传的脚手架了，OK，开发基于yeoman的脚手架工具就到这里结束了，你可以随时随地使用自己的脚手架快速生成项目模板了。有兴趣的同学可以去看看我编写的&lt;a href=&quot;https://github.com/luckykun/generator-reactpackage&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;generator-reactpackage&lt;/a&gt;源码，喜欢的同学顺便来个star～～哈哈，感谢～&lt;/p&gt;
+&lt;h1 id=&quot;使用脚手架（generator-reactpackage）&quot;&gt;&lt;a href=&quot;#使用脚手架（generator-reactpackage）&quot; class=&quot;headerlink&quot; title=&quot;使用脚手架（generator-reactpackage）&quot;&gt;&lt;/a&gt;使用脚手架（generator-reactpackage）&lt;/h1&gt;&lt;p&gt;首先确保自己安装了nodejs，然后全局安装yeoman&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;npm install -g yo&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;然后直接安装脚手架&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;npm install -g generator-reactpackage&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;在合适的地方新建一个文件夹，在文件夹下运行：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;yo reactpackage&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;然后就会在此目录下生成以下目录结构：&lt;/p&gt;
+&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;├── data&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;│   └── test.json&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;├── src&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;│   ├── components&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;│   │   └── App.js&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;│   ├── images&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;│   │   └── yeoman.png&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;│   ├── styles&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;│   │   └── app.scss&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;│   ├── vendor&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;│   │   └── jquery.js&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;│   ├── views&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;│   │   └── home.html&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;├── node_modules&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;├── index.html&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;├── package.json&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;└── webpack.config.js&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;细心的同学可能已经发现，其实这里生成的内容就是我们脚手架中定义的&lt;code&gt;templates目录&lt;/code&gt;下的内容。&lt;/p&gt;
+&lt;p&gt;然后使用以下命令：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;npm run dev    &lt;span class=&quot;comment&quot;&gt;//项目开发过程使用，启动服务，实时刷新&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;npm run build    &lt;span class=&quot;comment&quot;&gt;//开发完成之后打包文件（js、css分开打包）&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;注意：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;本项目默认监听端口是8888，所以在浏览器输入 &lt;a href=&quot;http://localhost:8888&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://localhost:8888&lt;/a&gt; 就能看到效果了&lt;/li&gt;
+&lt;li&gt;如果执行上述命令提示错误：&lt;code&gt;Error: getaddrinfo ENOTFOUND localhost&lt;/code&gt;，在host文件里面添加&lt;code&gt;127.0.0.1 localhost&lt;/code&gt;即可&lt;/li&gt;
+&lt;li&gt;监听端口和实时刷新的功能都能在&lt;code&gt;webpack.config.js&lt;/code&gt;文件中修改配置&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;如果项目运行正常，会看到如下效果：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/tps/TB1VKFhNXXXXXXCaXXXXXXXXXXX-884-217.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;结语&quot;&gt;&lt;a href=&quot;#结语&quot; class=&quot;headerlink&quot; title=&quot;结语&quot;&gt;&lt;/a&gt;结语&lt;/h1&gt;&lt;p&gt;可以看到，定义一个自己常用的脚手架骑士挺简单的，还有更多的功能有待探索。&lt;code&gt;generator-reactpackage&lt;/code&gt;是一个基于webpack+react+es6开发的项目模版，有需要用到这个模版的同学就赶快安装用起来吧。&lt;/p&gt;
+&lt;p&gt;另外，它的源码已经上传到github上，喜欢&lt;a href=&quot;https://github.com/luckykun/generator-reactpackage&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;generator-reactpackage&lt;/a&gt;的同学顺便给个star，多谢～～～&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;p&gt;自从前后端开始分离之后，前端项目工程化也显得越来越重要了，之前写过一篇搭建基于&lt;code&gt;Angular+Requirejs+Grunt&lt;/code&gt;的前端项目教程，有兴趣的可以&lt;a href=&quot;http://luckykun.com/work/2016-05-02/grunt-angular.html&quot;&gt;点这里去看&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;但是有些项目可以使用这种方式，但有些却不太适合，或者我们就是想要去尝试新的框架。比如最近我就尝试着使用了&lt;code&gt;webpack+react+es6&lt;/code&gt;的方式开发项目，感觉很不错，然后很多项目都用了这种方式。所以为了不需要每次开发的时候都从头开始新建文件，就想着能不能弄个工具，使用命令能够快速的生成这样一套跑的通的项目模版，正好，有个工具叫&lt;code&gt;yeoman&lt;/code&gt;。&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="工作" scheme="http://yoursite.com/categories/work/"/>
+    
+    
+      <category term="教程" scheme="http://yoursite.com/tags/%E6%95%99%E7%A8%8B/"/>
+    
+      <category term="构建" scheme="http://yoursite.com/tags/%E6%9E%84%E5%BB%BA/"/>
+    
+      <category term="react" scheme="http://yoursite.com/tags/react/"/>
+    
+      <category term="yeoman" scheme="http://yoursite.com/tags/yeoman/"/>
+    
+      <category term="webpack" scheme="http://yoursite.com/tags/webpack/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>canvas学习之API整理笔记（一）</title>
+    <link href="http://yoursite.com/work/2016-09-01/canvas-study01.html"/>
+    <id>http://yoursite.com/work/2016-09-01/canvas-study01.html</id>
+    <published>2016-09-01T03:07:56.000Z</published>
+    <updated>2016-09-01T03:27:34.000Z</updated>
+    
+    <content type="html">&lt;hr&gt;
+&lt;p&gt;其实canvas本身很简单，就是去学习它的API，多看实例，多自己动手练习，多总结。但是canvas的API实在是有点多，对于初学者来说，可能学到一半就止步不前了。我也有这种感觉，在学习的过程中，编写实例，用到了其中很多的属性和方法，但是回头来看的时候总觉得什么也没用。所以决定系统性的记录一下它常用到的API，方便以后查阅，也顺便造福一下大家。&lt;/p&gt;
+&lt;p&gt;另外：附一个之前学习的时候自己跟着教程写的一个小游戏：&lt;a href=&quot;http://luckykun.com/work/2016-05-30/tiny-heart-demo.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;tinyHeart小游戏&lt;/a&gt;&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;开始之前&quot;&gt;&lt;a href=&quot;#开始之前&quot; class=&quot;headerlink&quot; title=&quot;开始之前&quot;&gt;&lt;/a&gt;开始之前&lt;/h1&gt;&lt;p&gt;假设html代码中有一个canvas标签：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;canvas id=&lt;span class=&quot;string&quot;&gt;&quot;canvas&quot;&lt;/span&gt;&amp;gt;你的浏览器不支持canvas！&amp;lt;&lt;span class=&quot;regexp&quot;&gt;/canvas&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;如果你的浏览器是IE8及以下，那么很遗憾，上面那段文字会被渲染出来！而且下面的方法也都不能使用了；所以请使用支持canvas的浏览器来使用后面的方法。&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//获取canvas容器&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; can = &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.getElementById(‘canvas’);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//创建一个画布&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; ctx = can.getContext(‘&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;d’);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;另外我们可以还可以得到容器的宽和高度&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; canWid = can.width;   &lt;span class=&quot;comment&quot;&gt;//canvas 的宽度&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; canHei = can.height;   &lt;span class=&quot;comment&quot;&gt;//canvas 的高度&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;canvas只是一个容器，本身没有绘制的能力，所以我们要得到一个画布&lt;code&gt;ctx&lt;/code&gt;，使之具有绘制各种图形的能力。下文所有的方法都是ctx的方法。&lt;/p&gt;
+&lt;h1 id=&quot;绘制&quot;&gt;&lt;a href=&quot;#绘制&quot; class=&quot;headerlink&quot; title=&quot;绘制&quot;&gt;&lt;/a&gt;绘制&lt;/h1&gt;&lt;p&gt;绘制一个矩形：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//填充矩形（x, y是横纵坐标，原点在canvas的左上角）&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.fillRect(x, y, width, height);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//边框矩形，默认1px 黑色。   &lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.strokeRect(x, y, width, height);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//清除指定的矩形区域，变为透明&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.clearRect(x, y, width, height);       &lt;span class=&quot;comment&quot;&gt;//绘制动态效果时，常用来清除整个画布&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;绘制路径:&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//新建路径，beginPath是绘制新图形的开始&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.beginPath()&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//路径（线）的起点，一般在上面这条命令后执行&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.moveTo(x, y)  &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//线的终点&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.lineTo(x, y)   &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//绘制圆形&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.arc(x, y, r, start, end, &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;/&lt;span class=&quot;literal&quot;&gt;false&lt;/span&gt;)   &lt;span class=&quot;comment&quot;&gt;//x, y圆心，r半径，start和end是开始和结束角度，false表示顺时针（默认），true表示逆时针。&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//绘制弧线&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.arcTo(x1, y1, x2, y2, r);    &lt;span class=&quot;comment&quot;&gt;//当前端点、(x1,y1)和(x2,y2)这三个点连成的弧线，r是半径。&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//闭合路径，不是必须的，如果线的终点跟起点一样，会自动闭合。&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.closePath()&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//通过线条绘制轮廓（边框）&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.stroke()   &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;//通过路径填充区域（实心）&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.fill()&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;说明：&lt;/p&gt;
+&lt;p&gt;1.fill()和stroke()函数表示绘图结束。如果要继续绘制，需要重新新建路径（beginPath()）。&lt;/p&gt;
+&lt;p&gt;2.如果lineTo()最后的路径没有封闭，fill()函数会自动封闭路径，而stroke()函数不会。&lt;/p&gt;
+&lt;p&gt;例：绘制一个三角形&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;ctx.beginPath();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.moveTo(&lt;span class=&quot;number&quot;&gt;75&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;);    &lt;span class=&quot;comment&quot;&gt;//路径起点&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.lineTo(&lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;75&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.lineTo(&lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;25&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.fill();   &lt;span class=&quot;comment&quot;&gt;//自动将路径闭合，并默认填充黑色。&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h1 id=&quot;样式&quot;&gt;&lt;a href=&quot;#样式&quot; class=&quot;headerlink&quot; title=&quot;样式&quot;&gt;&lt;/a&gt;样式&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;颜色&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;ctx.fillStyle = &lt;span class=&quot;string&quot;&gt;&#39;red&#39;&lt;/span&gt;   &lt;span class=&quot;comment&quot;&gt;//针对fill()有效的颜色，还可以取值：&#39;#fff&#39;、&#39;rgba(0, 0, 0, 0.5)&#39;等。&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.strokeStyle = &lt;span class=&quot;string&quot;&gt;&#39;red&#39;&lt;/span&gt;   &lt;span class=&quot;comment&quot;&gt;//针对stroke()有效的颜色，取值同上。&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.globalAlpha = &lt;span class=&quot;number&quot;&gt;0.5&lt;/span&gt;;   &lt;span class=&quot;comment&quot;&gt;//透明度&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;线段端点&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;ctx.lineWidth = &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;;   &lt;span class=&quot;comment&quot;&gt;//线条宽度&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.lineCap = &lt;span class=&quot;string&quot;&gt;&#39;butt(默认)&#39;&lt;/span&gt;、&lt;span class=&quot;string&quot;&gt;&#39;round(圆弧)&#39;&lt;/span&gt;、&lt;span class=&quot;string&quot;&gt;&#39;square(方形)&#39;&lt;/span&gt;  &lt;span class=&quot;comment&quot;&gt;//线段端点显示的样式&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; ctx = &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.getElementById(&lt;span class=&quot;string&quot;&gt;&#39;canvas&#39;&lt;/span&gt;).getContext(&lt;span class=&quot;string&quot;&gt;&#39;2d&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; lineCap = [&lt;span class=&quot;string&quot;&gt;&#39;butt&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;round&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;square&#39;&lt;/span&gt;];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.strokeStyle = &lt;span class=&quot;string&quot;&gt;&#39;black&#39;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; (&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; i=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;i&amp;lt;lineCap.length;i++)&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ctx.lineWidth = &lt;span class=&quot;number&quot;&gt;15&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ctx.lineCap = lineCap[i];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ctx.beginPath();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ctx.moveTo(&lt;span class=&quot;number&quot;&gt;25&lt;/span&gt;+i*&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ctx.lineTo(&lt;span class=&quot;number&quot;&gt;25&lt;/span&gt;+i*&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;140&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ctx.stroke();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;效果如下图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/tps/TB1MubjMVXXXXXuXFXXXXXXXXXX-143-158.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;线段连接处&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;ctx.lineJoin = &lt;span class=&quot;string&quot;&gt;&#39;miter(默认)&#39;&lt;/span&gt;、round(圆角)、&lt;span class=&quot;string&quot;&gt;`bevel(横线)`&lt;/span&gt;   &lt;span class=&quot;comment&quot;&gt;//两线段连接处所显示的样子&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; ctx = &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.getElementById(&lt;span class=&quot;string&quot;&gt;&#39;canvas&#39;&lt;/span&gt;).getContext(&lt;span class=&quot;string&quot;&gt;&#39;2d&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; lineJoin = [&lt;span class=&quot;string&quot;&gt;&#39;round&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;bevel&#39;&lt;/span&gt;,&lt;span class=&quot;string&quot;&gt;&#39;miter&#39;&lt;/span&gt;];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.lineWidth = &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; (&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; i=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;i&amp;lt;lineJoin.length;i++)&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ctx.lineJoin = lineJoin[i];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ctx.beginPath();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ctx.moveTo(&lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;+i*&lt;span class=&quot;number&quot;&gt;40&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ctx.lineTo(&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;+i*&lt;span class=&quot;number&quot;&gt;40&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ctx.lineTo(&lt;span class=&quot;number&quot;&gt;90&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;+i*&lt;span class=&quot;number&quot;&gt;40&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ctx.lineTo(&lt;span class=&quot;number&quot;&gt;130&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;+i*&lt;span class=&quot;number&quot;&gt;40&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ctx.lineTo(&lt;span class=&quot;number&quot;&gt;170&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;+i*&lt;span class=&quot;number&quot;&gt;40&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ctx.stroke();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;效果如下图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/tps/TB1XRvfMVXXXXccXFXXXXXXXXXX-181-139.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;虚线&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;ctx.setLineDash([&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;])   &lt;span class=&quot;comment&quot;&gt;//设置虚线，参数为数组，第一个值为实现宽度，第二个值为空白的宽度&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.lineDashOffset = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;   &lt;span class=&quot;comment&quot;&gt;//虚线起始偏移量&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; can = &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.getElementById(&lt;span class=&quot;string&quot;&gt;&#39;canvas&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; ctx = can.getContext(&lt;span class=&quot;string&quot;&gt;&#39;2d&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; offset = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;draw&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    offset++;      &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (offset &amp;gt; &lt;span class=&quot;number&quot;&gt;16&lt;/span&gt;) &amp;#123;            &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        offset = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;      &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ctx.clearRect(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, can.width, can.height);  &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ctx.setLineDash([&lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;]);  &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ctx.lineDashOffset = -offset;  &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ctx.strokeRect(&lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;setInterval(draw, &lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;效果如下图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/tps/TB1knDkMVXXXXXLXFXXXXXXXXXX-145-114.gif&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;渐变&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; bg = ctx.createLinearGradient(x1, y1, x2, y2);  &lt;span class=&quot;comment&quot;&gt;//定义线性渐变，渐变的起点 (x1,y1) 与终点 (x2,y2)。&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; bg1 = ctx.createRadialGradient(&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;);   &lt;span class=&quot;comment&quot;&gt;//定义径向渐变&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;bg.addColorStop(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;red&#39;&lt;/span&gt;);  &lt;span class=&quot;comment&quot;&gt;//定义好，之后开始上色&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;bg.addColorStop(&lt;span class=&quot;number&quot;&gt;0.5&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;blue&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;bg.addColorStop(&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;rgba(0, 0, 0, 0.6)&#39;&lt;/span&gt;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; bg = ctx.createLinearGradient(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;);     &lt;span class=&quot;comment&quot;&gt;//线性渐变&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;bg.addColorStop(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;black&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;bg.addColorStop(&lt;span class=&quot;number&quot;&gt;0.6&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;#fff&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.fillStyle = bg;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.fillRect(&lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;效果如下图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/tps/TB1G3_XMVXXXXX4aXXXXXXXXXXX-125-119.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; bg1 = ctx.createRadialGradient(&lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;);    &lt;span class=&quot;comment&quot;&gt;//径向渐变&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;bg1.addColorStop(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;#FF5F98&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;bg1.addColorStop(&lt;span class=&quot;number&quot;&gt;0.75&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;#FF0188&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;bg1.addColorStop(&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;rgba(255,1,136,0)&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.fillStyle = bg1;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.fillRect(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;150&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;150&lt;/span&gt;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;  效果如下图：&lt;/p&gt;
+&lt;p&gt;  &lt;img src=&quot;https://img.alicdn.com/tps/TB1.qW8MVXXXXbcaXXXXXXXXXXX-140-146.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;h1 id=&quot;文字&quot;&gt;&lt;a href=&quot;#文字&quot; class=&quot;headerlink&quot; title=&quot;文字&quot;&gt;&lt;/a&gt;文字&lt;/h1&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; ctx = &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.getElementById(&lt;span class=&quot;string&quot;&gt;&#39;canvas&#39;&lt;/span&gt;).getContext(&lt;span class=&quot;string&quot;&gt;&#39;2d&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.shadowOffsetX = &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;;     &lt;span class=&quot;comment&quot;&gt;//X轴阴影距离，负值表示往上，正值表示往下&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.shadowOffsetY = &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;;     &lt;span class=&quot;comment&quot;&gt;//Y轴阴影距离，负值表示往左，正值表示往右&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.shadowBlur = &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;;     &lt;span class=&quot;comment&quot;&gt;//阴影的模糊程度&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.shadowColor = &lt;span class=&quot;string&quot;&gt;&quot;rgba(0, 0, 0, 0.5)&quot;&lt;/span&gt;;    &lt;span class=&quot;comment&quot;&gt;//阴影颜色&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.font = &lt;span class=&quot;string&quot;&gt;&quot;30px Times New Roman&quot;&lt;/span&gt;;    &lt;span class=&quot;comment&quot;&gt;//设置字体和字体大小&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.fillStyle = &lt;span class=&quot;string&quot;&gt;&quot;Black&quot;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.fillText(&lt;span class=&quot;string&quot;&gt;&quot;Sample String&quot;&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;15&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;30&lt;/span&gt;);    &lt;span class=&quot;comment&quot;&gt;//实体文字&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.strokeStyle = &lt;span class=&quot;string&quot;&gt;&#39;red&#39;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.strokeText(&lt;span class=&quot;string&quot;&gt;&#39;Hello world&#39;&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;15&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;);    &lt;span class=&quot;comment&quot;&gt;//边框文字&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;效果如下图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/tps/TB1HIvbMVXXXXcuaXXXXXXXXXXX-219-149.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;文字的属性出了上面的列出的以外，还有以下一些属性：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;ctx.font = &lt;span class=&quot;string&quot;&gt;&#39;20px Times New Roman&#39;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.textAlign = &lt;span class=&quot;string&quot;&gt;&#39;center&#39;&lt;/span&gt;;    &lt;span class=&quot;comment&quot;&gt;//start, end, left, right or center&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.textBaseline = &lt;span class=&quot;string&quot;&gt;&#39;middle&#39;&lt;/span&gt;  &lt;span class=&quot;comment&quot;&gt;//top, hanging, middle, alphabetic, ideographic, bottom&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.direction = &lt;span class=&quot;string&quot;&gt;&#39;inherit&#39;&lt;/span&gt;   &lt;span class=&quot;comment&quot;&gt;//ltr, rtl, inherit&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h1 id=&quot;图像&quot;&gt;&lt;a href=&quot;#图像&quot; class=&quot;headerlink&quot; title=&quot;图像&quot;&gt;&lt;/a&gt;图像&lt;/h1&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; img = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; Image();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;img.src= &lt;span class=&quot;string&quot;&gt;&#39;./images/background.jpg&#39;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.drawImage(img, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;);   &lt;span class=&quot;comment&quot;&gt;//img为图像，(0, 0)为起始坐标&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;这里的img可以是一个img对象，也可以是一个img元素。&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;img id=&lt;span class=&quot;string&quot;&gt;&quot;img&quot;&lt;/span&gt; src=&lt;span class=&quot;string&quot;&gt;&quot;./images/background.jpg&quot;&lt;/span&gt; style=&lt;span class=&quot;string&quot;&gt;&quot;display:none;&quot;&lt;/span&gt;&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.drawImage(&lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.getElementById(&lt;span class=&quot;string&quot;&gt;&#39;img&#39;&lt;/span&gt;), &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;另外，绘制图片的时候还可以对图片进行缩放，类似于css中的&lt;code&gt;background-size&lt;/code&gt;：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;ctx.drawImage(img, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, w, h);   &lt;span class=&quot;comment&quot;&gt;//w、h指定图片的宽高，则会同比例缩放。&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h1 id=&quot;变形&quot;&gt;&lt;a href=&quot;#变形&quot; class=&quot;headerlink&quot; title=&quot;变形&quot;&gt;&lt;/a&gt;变形&lt;/h1&gt;&lt;p&gt;慢慢的从这里开始，就要开始涉及到复杂的绘制了。而开始复杂的绘制之前，我们得先了解一个概念：&lt;code&gt;canvas绘图的状态&lt;/code&gt;。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;状态&lt;/p&gt;
+&lt;p&gt;canvas 的状态就是当前画面应用的所有样式和变形的一个快照。另外，用来操作这个状态的有两个方法：&lt;code&gt;save()和restore()&lt;/code&gt;。save()用来保存当前状态，restore()用来恢复刚才保存的状态。他们都可以多次调用。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;ctx.fillStyle = &lt;span class=&quot;string&quot;&gt;&#39;black&#39;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.fillRect(&lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;150&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;150&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.save();  &lt;span class=&quot;comment&quot;&gt;//保存当前状态&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.fillStyle= &lt;span class=&quot;string&quot;&gt;&#39;#fff&#39;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.fillRect(&lt;span class=&quot;number&quot;&gt;45&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;45&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.restore();    &lt;span class=&quot;comment&quot;&gt;//恢复到刚才保存的状态&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.fillRect(&lt;span class=&quot;number&quot;&gt;70&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;70&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;  效果如下图：&lt;/p&gt;
+&lt;p&gt;  &lt;img src=&quot;https://img.alicdn.com/tps/TB1CLzJMVXXXXa_aXXXXXXXXXXX-235-227.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;位移(translate)&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;ctx.translate(x, y);   &lt;span class=&quot;comment&quot;&gt;//更改canvas的原点&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; ctx = &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.getElementById(&lt;span class=&quot;string&quot;&gt;&#39;canvas&#39;&lt;/span&gt;).getContext(&lt;span class=&quot;string&quot;&gt;&#39;2d&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; i = &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;; i&amp;lt; &lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;; i++) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ctx.save();   &lt;span class=&quot;comment&quot;&gt;//使用save方法保存状态，让每次位移时都针对（0，0）移动。&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  ctx.translate(&lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;*i, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  ctx.fillRect(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  ctx.restore();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;效果如下图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/tps/TB1Oyf8MVXXXXX9XXXXXXXXXXXX-425-170.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;旋转&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;ctx.rotate(&lt;span class=&quot;built_in&quot;&gt;Math&lt;/span&gt;.PI * &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;)     &lt;span class=&quot;comment&quot;&gt;//参照原点顺时针旋转360度&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;ctx.translate(&lt;span class=&quot;number&quot;&gt;75&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;75&lt;/span&gt;);    &lt;span class=&quot;comment&quot;&gt;//把原点移动到(75, 75);&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; (&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; i=&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;; i&amp;lt;&lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;; i++)&amp;#123;       &lt;span class=&quot;comment&quot;&gt;// 从里到外一共6圈&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  ctx.save();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  ctx.fillStyle = &lt;span class=&quot;string&quot;&gt;&#39;rgb(&#39;&lt;/span&gt;+(&lt;span class=&quot;number&quot;&gt;50&lt;/span&gt;*i)+&lt;span class=&quot;string&quot;&gt;&#39;,&#39;&lt;/span&gt;+(&lt;span class=&quot;number&quot;&gt;255&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;-50&lt;/span&gt;*i)+&lt;span class=&quot;string&quot;&gt;&#39;,255)&#39;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; (&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; j=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; j&amp;lt;i*&lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;; j++)&amp;#123;     &lt;span class=&quot;comment&quot;&gt;// 每一圈有i*6个圆点&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ctx.rotate(&lt;span class=&quot;built_in&quot;&gt;Math&lt;/span&gt;.PI*&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;/(i*&lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;));&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ctx.beginPath();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ctx.arc(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,i*&lt;span class=&quot;number&quot;&gt;12.5&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;,&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;,&lt;span class=&quot;built_in&quot;&gt;Math&lt;/span&gt;.PI*&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;,&lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    ctx.fill();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;  ctx.restore();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;  效果如下图：&lt;/p&gt;
+&lt;p&gt;  &lt;img src=&quot;https://img.alicdn.com/tps/TB1VMIaMVXXXXXjXXXXXXXXXXXX-183-181.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;缩放&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;ctx.scale(x, y);     &lt;span class=&quot;comment&quot;&gt;//基于原点缩放，x、y是两个轴的缩放倍数&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; ctx = &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.getElementById(&lt;span class=&quot;string&quot;&gt;&#39;canvas&#39;&lt;/span&gt;).getContext(&lt;span class=&quot;string&quot;&gt;&#39;2d&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.fillStyle = &lt;span class=&quot;string&quot;&gt;&#39;red&#39;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.scale(&lt;span class=&quot;number&quot;&gt;0.8&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;1.2&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.beginPath();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.arc(&lt;span class=&quot;number&quot;&gt;75&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;75&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;60&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, &lt;span class=&quot;built_in&quot;&gt;Math&lt;/span&gt;.PI * &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;ctx.fill();&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;本来绘制的是一个半径为60的圆形，但是经过缩放之后，实际效果如下：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/tps/TB1drnVMVXXXXbqXVXXXXXXXXXX-127-194.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;动画&quot;&gt;&lt;a href=&quot;#动画&quot; class=&quot;headerlink&quot; title=&quot;动画&quot;&gt;&lt;/a&gt;动画&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;元素的位置移动，就形成了动画。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;一帧一帧的来渲染这个元素，而且这个元素每一帧的位置都不一样，我们的眼睛看到的就是动画了。实现起来也很方便，js提供了两个方法：&lt;code&gt;setTimeout 和setInterval&lt;/code&gt;都可以实现，但是一个有逼格的程序员实现动画是不会用这两个方法的，而是用&lt;code&gt;requestAnimationFrame&lt;/code&gt;这个方法。有什么区别呢？下面简单做个比较。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;setInterval(myFun, 10);&lt;/code&gt; 意思是隔一毫秒执行一个myFun函数，但是这样就有一个问题了，比如我myFun函数里面绘制的东西比较耗时，而10ms之内还没有完全绘制出来，但是这段代码强制1ms之后又开始绘制下一帧了，所以就会出现&lt;code&gt;丢帧&lt;/code&gt;的问题；反之，如果时间设置太长，就会出现&lt;code&gt;画面不流畅、视觉卡顿&lt;/code&gt;的问题。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;requestAnimationFrame(myFun);&lt;/code&gt; 如果我们这样写，又是什么意思呢？意思是根据一定的时间间隔，会自动执行myFun函数来进行绘制。这个”一定的时间间隔”就是根据浏览器的性能或者网速快慢来决定了，总之，它会保证你绘制完这一帧，才会绘制下一帧，保证性能的同时，也保证动画的流畅。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&quot;结语&quot;&gt;&lt;a href=&quot;#结语&quot; class=&quot;headerlink&quot; title=&quot;结语&quot;&gt;&lt;/a&gt;结语&lt;/h1&gt;&lt;p&gt;这些API已经包含了大部分常用的了，结合requestAnimationFrame函数已经可以绘制很多酷炫的效果了。但是光看这些API很简单，但是想要在绘制游戏或者动画中用起来得心应手还需要看大量的实例，自己实践总结的。&lt;/p&gt;
+&lt;p&gt;本文就到这里，感谢各位看官～&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;p&gt;其实canvas本身很简单，就是去学习它的API，多看实例，多自己动手练习，多总结。但是canvas的API实在是有点多，对于初学者来说，可能学到一半就止步不前了。我也有这种感觉，在学习的过程中，编写实例，用到了其中很多的属性和方法，但是回头来看的时候总觉得什么也没用。所以决定系统性的记录一下它常用到的API，方便以后查阅，也顺便造福一下大家。&lt;/p&gt;
+&lt;p&gt;另外：附一个之前学习的时候自己跟着教程写的一个小游戏：&lt;a href=&quot;http://luckykun.com/work/2016-05-30/tiny-heart-demo.html&quot;&gt;tinyHeart小游戏&lt;/a&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="工作" scheme="http://yoursite.com/categories/work/"/>
+    
+    
+      <category term="canvas" scheme="http://yoursite.com/tags/canvas/"/>
+    
+      <category term="html5" scheme="http://yoursite.com/tags/html5/"/>
+    
+  </entry>
   
   <entry>
     <title>两种文件上传的实现－Ajax上传和form+iframe</title>
@@ -418,9 +646,9 @@
       <category term="工作" scheme="http://yoursite.com/categories/work/"/>
     
     
-      <category term="教程" scheme="http://yoursite.com/tags/%E6%95%99%E7%A8%8B/"/>
-    
       <category term="hexo系列" scheme="http://yoursite.com/tags/hexo%E7%B3%BB%E5%88%97/"/>
+    
+      <category term="教程" scheme="http://yoursite.com/tags/%E6%95%99%E7%A8%8B/"/>
     
   </entry>
   
@@ -578,11 +806,11 @@
       <category term="工作" scheme="http://yoursite.com/categories/work/"/>
     
     
-      <category term="demo" scheme="http://yoursite.com/tags/demo/"/>
+      <category term="canvas" scheme="http://yoursite.com/tags/canvas/"/>
     
       <category term="html5" scheme="http://yoursite.com/tags/html5/"/>
     
-      <category term="canvas" scheme="http://yoursite.com/tags/canvas/"/>
+      <category term="demo" scheme="http://yoursite.com/tags/demo/"/>
     
   </entry>
   
@@ -591,9 +819,10 @@
     <link href="http://yoursite.com/work/2016-05-29/tiny-heart-study.html"/>
     <id>http://yoursite.com/work/2016-05-29/tiny-heart-study.html</id>
     <published>2016-05-29T01:41:43.000Z</published>
-    <updated>2016-07-05T14:19:12.000Z</updated>
+    <updated>2016-09-01T03:10:23.000Z</updated>
     
-    <content type="html">&lt;p&gt;最近除了做业务，也在尝试学习h5和移动端，在这个过程中，学到了很多，利用h5和canvas做了一个爱心鱼的小游戏。源码在github上，down下来直接就能够运行。要是觉得还行，就给个star吧！&lt;a href=&quot;https://github.com/luckykun/tinyHeart&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;源码地址点这里&lt;/a&gt;&lt;/p&gt;
+    <content type="html">&lt;hr&gt;
+&lt;p&gt;最近除了做业务，也在尝试学习h5和移动端，在这个过程中，学到了很多，利用h5和canvas做了一个爱心鱼的小游戏。源码在github上，down下来直接就能够运行。要是觉得还行，就给个star吧！&lt;a href=&quot;https://github.com/luckykun/tinyHeart&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;源码地址点这里&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;下面我就做游戏的步骤来分享总结一下用到h5和canvas的API和一些常见的数学函数。推荐你先去玩一玩游戏，才能更好的明白这些逻辑。&lt;a href=&quot;http://luckykun.com/work/2016-05-30/tiny-heart-demo.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;点这里去玩一下&lt;/a&gt;&lt;/p&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
 &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;首先，一个游戏最重要的就是动画，怎么让元素动起来呢？先来看一句话：&lt;/p&gt;
@@ -689,7 +918,8 @@
     
     <summary type="html">
     
-      &lt;p&gt;最近除了做业务，也在尝试学习h5和移动端，在这个过程中，学到了很多，利用h5和canvas做了一个爱心鱼的小游戏。源码在github上，down下来直接就能够运行。要是觉得还行，就给个star吧！&lt;a href=&quot;https://github.com/luckykun/tinyHeart&quot;&gt;源码地址点这里&lt;/a&gt;&lt;/p&gt;
+      &lt;hr&gt;
+&lt;p&gt;最近除了做业务，也在尝试学习h5和移动端，在这个过程中，学到了很多，利用h5和canvas做了一个爱心鱼的小游戏。源码在github上，down下来直接就能够运行。要是觉得还行，就给个star吧！&lt;a href=&quot;https://github.com/luckykun/tinyHeart&quot;&gt;源码地址点这里&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;下面我就做游戏的步骤来分享总结一下用到h5和canvas的API和一些常见的数学函数。推荐你先去玩一玩游戏，才能更好的明白这些逻辑。&lt;a href=&quot;http://luckykun.com/work/2016-05-30/tiny-heart-demo.html&quot;&gt;点这里去玩一下&lt;/a&gt;&lt;/p&gt;
     
     </summary>
@@ -697,11 +927,11 @@
       <category term="工作" scheme="http://yoursite.com/categories/work/"/>
     
     
-      <category term="教程" scheme="http://yoursite.com/tags/%E6%95%99%E7%A8%8B/"/>
+      <category term="canvas" scheme="http://yoursite.com/tags/canvas/"/>
     
       <category term="html5" scheme="http://yoursite.com/tags/html5/"/>
     
-      <category term="canvas" scheme="http://yoursite.com/tags/canvas/"/>
+      <category term="教程" scheme="http://yoursite.com/tags/%E6%95%99%E7%A8%8B/"/>
     
   </entry>
   
@@ -867,9 +1097,9 @@
       <category term="工作" scheme="http://yoursite.com/categories/work/"/>
     
     
-      <category term="教程" scheme="http://yoursite.com/tags/%E6%95%99%E7%A8%8B/"/>
-    
       <category term="hexo系列" scheme="http://yoursite.com/tags/hexo%E7%B3%BB%E5%88%97/"/>
+    
+      <category term="教程" scheme="http://yoursite.com/tags/%E6%95%99%E7%A8%8B/"/>
     
   </entry>
   
@@ -940,9 +1170,9 @@
     
       <category term="javascript" scheme="http://yoursite.com/tags/javascript/"/>
     
-      <category term="插件" scheme="http://yoursite.com/tags/%E6%8F%92%E4%BB%B6/"/>
-    
       <category term="微信分享" scheme="http://yoursite.com/tags/%E5%BE%AE%E4%BF%A1%E5%88%86%E4%BA%AB/"/>
+    
+      <category term="插件" scheme="http://yoursite.com/tags/%E6%8F%92%E4%BB%B6/"/>
     
   </entry>
   
@@ -1326,9 +1556,9 @@
     
       <category term="demo" scheme="http://yoursite.com/tags/demo/"/>
     
-      <category term="highcharts" scheme="http://yoursite.com/tags/highcharts/"/>
-    
       <category term="插件" scheme="http://yoursite.com/tags/%E6%8F%92%E4%BB%B6/"/>
+    
+      <category term="highcharts" scheme="http://yoursite.com/tags/highcharts/"/>
     
   </entry>
   
@@ -1666,10 +1896,11 @@
     <link href="http://yoursite.com/work/2016-04-23/heoll-hexo.html"/>
     <id>http://yoursite.com/work/2016-04-23/heoll-hexo.html</id>
     <published>2016-04-23T14:11:51.000Z</published>
-    <updated>2016-07-05T15:00:15.000Z</updated>
+    <updated>2016-08-30T13:47:53.000Z</updated>
     
     <content type="html">&lt;hr&gt;
 &lt;p&gt;一直都在博客园写博客，不过最近在逛园子的时候不小心看到了&lt;code&gt;hexo&lt;/code&gt;,简直有种相见恨晚的感觉呀！在github上创建自己的开源博客，维护方便，主题多多，更重要的是，终于找到只属于自己的小窝啦！也希望自己能坚持写文^_^&lt;/p&gt;
+&lt;p&gt;博客仓库地址(喜欢的朋友给个star呀，多谢～)：&lt;a href=&quot;https://github.com/luckykun/luckykun.github.io&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;博客仓库点这里&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;为了引起读者的兴趣，先介绍一下，搭建完成之后，只需这几个简单常用的命令，就能够轻松维护自己的博客了：&lt;/p&gt;
 &lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ hexo &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt;(n) xxx    &lt;span class=&quot;comment&quot;&gt;//写文章&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ hexo clean     &lt;span class=&quot;comment&quot;&gt;//清除缓存&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ hexo generate(g)    &lt;span class=&quot;comment&quot;&gt;//把文章生成页面&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ hexo server(s)    &lt;span class=&quot;comment&quot;&gt;//启动本地服务调试&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ hexo deploy(d)    &lt;span class=&quot;comment&quot;&gt;//部署到github 可与hexo g合并为 hexo d -g&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;a id=&quot;more&quot;&gt;&lt;/a&gt;
@@ -1775,6 +2006,7 @@
     
       &lt;hr&gt;
 &lt;p&gt;一直都在博客园写博客，不过最近在逛园子的时候不小心看到了&lt;code&gt;hexo&lt;/code&gt;,简直有种相见恨晚的感觉呀！在github上创建自己的开源博客，维护方便，主题多多，更重要的是，终于找到只属于自己的小窝啦！也希望自己能坚持写文^_^&lt;/p&gt;
+&lt;p&gt;博客仓库地址(喜欢的朋友给个star呀，多谢～)：&lt;a href=&quot;https://github.com/luckykun/luckykun.github.io&quot;&gt;博客仓库点这里&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;为了引起读者的兴趣，先介绍一下，搭建完成之后，只需这几个简单常用的命令，就能够轻松维护自己的博客了：&lt;/p&gt;
 &lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$ hexo &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt;(n) xxx    &lt;span class=&quot;comment&quot;&gt;//写文章&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ hexo clean     &lt;span class=&quot;comment&quot;&gt;//清除缓存&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ hexo generate(g)    &lt;span class=&quot;comment&quot;&gt;//把文章生成页面&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ hexo server(s)    &lt;span class=&quot;comment&quot;&gt;//启动本地服务调试&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$ hexo deploy(d)    &lt;span class=&quot;comment&quot;&gt;//部署到github 可与hexo g合并为 hexo d -g&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
@@ -1783,9 +2015,9 @@
       <category term="工作" scheme="http://yoursite.com/categories/work/"/>
     
     
-      <category term="教程" scheme="http://yoursite.com/tags/%E6%95%99%E7%A8%8B/"/>
-    
       <category term="hexo系列" scheme="http://yoursite.com/tags/hexo%E7%B3%BB%E5%88%97/"/>
+    
+      <category term="教程" scheme="http://yoursite.com/tags/%E6%95%99%E7%A8%8B/"/>
     
   </entry>
   

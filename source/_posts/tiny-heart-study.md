@@ -9,6 +9,8 @@ tags:
 toc: true
 ---
 
+-----------------
+
 最近除了做业务，也在尝试学习h5和移动端，在这个过程中，学到了很多，利用h5和canvas做了一个爱心鱼的小游戏。源码在github上，down下来直接就能够运行。要是觉得还行，就给个star吧！[源码地址点这里](https://github.com/luckykun/tinyHeart)
 
 下面我就做游戏的步骤来分享总结一下用到h5和canvas的API和一些常见的数学函数。推荐你先去玩一玩游戏，才能更好的明白这些逻辑。[点这里去玩一下](http://luckykun.com/work/2016-05-30/tiny-heart-demo.html)
