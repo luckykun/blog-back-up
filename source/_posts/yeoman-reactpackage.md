@@ -222,3 +222,6 @@ npm run build    //开发完成之后打包文件（js、css分开打包）
 可以看到，定义一个自己常用的脚手架骑士挺简单的，还有更多的功能有待探索。`generator-reactpackage`是一个基于webpack+react+es6开发的项目模版，有需要用到这个模版的同学就赶快安装用起来吧。
 
 另外，它的源码已经上传到github上，喜欢[generator-reactpackage](https://github.com/luckykun/generator-reactpackage)的同学顺便给个star，多谢～～～
+
+
+--------------------------------------------------------------------------------

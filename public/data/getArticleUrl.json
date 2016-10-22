@@ -76,5 +76,9 @@
         "title": "开发自己的yeoman脚手架（generator-reactpackage）",
         "url": "/work/2016-09-01/yeoman-reactpackage.html",
         "tags": "react,webpack,yeoman,教程,构建,工作"
+    }, {
+        "title": "总结js常用函数和常用技巧（持续更新）",
+        "url": "/work/2016-10-11/com-func-skill.html",
+        "tags": "javascript,干货总结,工作"
     }]
 }

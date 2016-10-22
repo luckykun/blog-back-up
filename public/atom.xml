@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-09-01T04:07:08.000Z</updated>
+  <updated>2016-10-14T16:40:46.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,11 +16,70 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>总结js常用函数和常用技巧（持续更新）</title>
+    <link href="http://yoursite.com/work/2016-10-11/com-func-skill.html"/>
+    <id>http://yoursite.com/work/2016-10-11/com-func-skill.html</id>
+    <published>2016-10-11T15:16:27.000Z</published>
+    <updated>2016-10-14T16:40:46.000Z</updated>
+    
+    <content type="html">&lt;hr&gt;
+&lt;p&gt;学习和工作的过程中总结的干货，包括常用函数、常用js技巧、常用正则表达式、git笔记等。为刚接触前端的童鞋们提供一个简单的查询的途径，也以此来缅怀我的前端学习之路。&lt;br&gt;PS：此文档，我会持续更新。&lt;br&gt;&lt;a id=&quot;more&quot;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&quot;Ajax请求&quot;&gt;&lt;a href=&quot;#Ajax请求&quot; class=&quot;headerlink&quot; title=&quot;Ajax请求&quot;&gt;&lt;/a&gt;Ajax请求&lt;/h1&gt;&lt;h2 id=&quot;jquery-ajax函数&quot;&gt;&lt;a href=&quot;#jquery-ajax函数&quot; class=&quot;headerlink&quot; title=&quot;jquery ajax函数&quot;&gt;&lt;/a&gt;jquery ajax函数&lt;/h2&gt;&lt;p&gt;我自己封装了一个ajax的函数，代码如下：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; Ajax = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;url, type success, error&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    $.ajax(&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        url: url,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        type: type,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        dataType: &lt;span class=&quot;string&quot;&gt;&#39;json&#39;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        timeout: &lt;span class=&quot;number&quot;&gt;10000&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        success: &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;d&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; data = d.data;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            success &amp;amp;&amp;amp; success(data);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &amp;#125;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        error: &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;e&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            error &amp;amp;&amp;amp; error(e);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 使用方法：&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;Ajax(&lt;span class=&quot;string&quot;&gt;&#39;/data.json&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;get&#39;&lt;/span&gt;, &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;data&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(data);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;jsonp方式&quot;&gt;&lt;a href=&quot;#jsonp方式&quot; class=&quot;headerlink&quot; title=&quot;jsonp方式&quot;&gt;&lt;/a&gt;jsonp方式&lt;/h2&gt;&lt;p&gt;有时候我们为了跨域，要使用jsonp的方法，我也封装了一个函数：&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;jsonp&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;config&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; options = config || &amp;#123;&amp;#125;;   &lt;span class=&quot;comment&quot;&gt;// 需要配置url, success, time, fail四个属性&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; callbackName = (&lt;span class=&quot;string&quot;&gt;&#39;jsonp_&#39;&lt;/span&gt; + &lt;span class=&quot;built_in&quot;&gt;Math&lt;/span&gt;.random()).replace(&lt;span class=&quot;string&quot;&gt;&quot;.&quot;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;&quot;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; oHead = &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.getElementsByTagName(&lt;span class=&quot;string&quot;&gt;&#39;head&#39;&lt;/span&gt;)[&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; oScript = &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.createElement(&lt;span class=&quot;string&quot;&gt;&#39;script&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    oHead.appendChild(oScript);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;window&lt;/span&gt;[callbackName] = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;json&lt;/span&gt;) &lt;/span&gt;&amp;#123;  &lt;span class=&quot;comment&quot;&gt;//创建jsonp回调函数&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        oHead.removeChild(oScript);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        clearTimeout(oScript.timer);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;built_in&quot;&gt;window&lt;/span&gt;[callbackName] = &lt;span class=&quot;literal&quot;&gt;null&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        options.success &amp;amp;&amp;amp; options.success(json);   &lt;span class=&quot;comment&quot;&gt;//先删除script标签，实际上执行的是success函数&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    oScript.src = options.url + &lt;span class=&quot;string&quot;&gt;&#39;?&#39;&lt;/span&gt; + callbackName;    &lt;span class=&quot;comment&quot;&gt;//发送请求&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (options.time) &amp;#123;  &lt;span class=&quot;comment&quot;&gt;//设置超时处理&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        oScript.timer = setTimeout(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; (&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &lt;span class=&quot;built_in&quot;&gt;window&lt;/span&gt;[callbackName] = &lt;span class=&quot;literal&quot;&gt;null&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            oHead.removeChild(oScript);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            options.fail &amp;amp;&amp;amp; options.fail(&amp;#123; message: &lt;span class=&quot;string&quot;&gt;&quot;超时&quot;&lt;/span&gt; &amp;#125;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &amp;#125;, options.time);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;comment&quot;&gt;// 使用方法：&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;jsonp(&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    url: &lt;span class=&quot;string&quot;&gt;&#39;/b.com/b.json&#39;&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    success: &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;d&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;//数据处理&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    time: &lt;span class=&quot;number&quot;&gt;5000&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    fail: &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;comment&quot;&gt;//错误处理&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;       &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h1 id=&quot;常用正则验证表达式&quot;&gt;&lt;a href=&quot;#常用正则验证表达式&quot; class=&quot;headerlink&quot; title=&quot;常用正则验证表达式&quot;&gt;&lt;/a&gt;常用正则验证表达式&lt;/h1&gt;&lt;h2 id=&quot;手机号验证&quot;&gt;&lt;a href=&quot;#手机号验证&quot; class=&quot;headerlink&quot; title=&quot;手机号验证&quot;&gt;&lt;/a&gt;手机号验证&lt;/h2&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; validate = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;num&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; exp = &lt;span class=&quot;regexp&quot;&gt;/^1[3-9]\d&amp;#123;9&amp;#125;$/&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; exp.test(num);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;身份证号验证&quot;&gt;&lt;a href=&quot;#身份证号验证&quot; class=&quot;headerlink&quot; title=&quot;身份证号验证&quot;&gt;&lt;/a&gt;身份证号验证&lt;/h2&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; exp = &lt;span class=&quot;regexp&quot;&gt;/^[1-9]&amp;#123;1&amp;#125;[0-9]&amp;#123;14&amp;#125;$|^[1-9]&amp;#123;1&amp;#125;[0-9]&amp;#123;16&amp;#125;([0-9]|[xX])$/&lt;/span&gt;;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;ip验证&quot;&gt;&lt;a href=&quot;#ip验证&quot; class=&quot;headerlink&quot; title=&quot;ip验证&quot;&gt;&lt;/a&gt;ip验证&lt;/h2&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; exp = &lt;span class=&quot;regexp&quot;&gt;/^(\d&amp;#123;1,2&amp;#125;|1\d\d|2[0-4]\d|25[0-5])\.(\d&amp;#123;1,2&amp;#125;|1\d\d|2[0-4]\d|25[0-5])\.(\d&amp;#123;1,2&amp;#125;|1\d\d|2[0-4]\d|25[0-5])\.(\d&amp;#123;1,2&amp;#125;|1\d\d|2[0-4]\d|25[0-5])$/&lt;/span&gt;;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h1 id=&quot;常用js函数&quot;&gt;&lt;a href=&quot;#常用js函数&quot; class=&quot;headerlink&quot; title=&quot;常用js函数&quot;&gt;&lt;/a&gt;常用js函数&lt;/h1&gt;&lt;h2 id=&quot;返回顶部&quot;&gt;&lt;a href=&quot;#返回顶部&quot; class=&quot;headerlink&quot; title=&quot;返回顶部&quot;&gt;&lt;/a&gt;返回顶部&lt;/h2&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;$(&lt;span class=&quot;built_in&quot;&gt;window&lt;/span&gt;).scroll(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; a = $(&lt;span class=&quot;built_in&quot;&gt;window&lt;/span&gt;).scrollTop();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(a &amp;gt; &lt;span class=&quot;number&quot;&gt;100&lt;/span&gt;) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        $(&lt;span class=&quot;string&quot;&gt;&#39;.go-top&#39;&lt;/span&gt;).fadeIn();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        $(&lt;span class=&quot;string&quot;&gt;&#39;.go-top&#39;&lt;/span&gt;).fadeOut();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;$(&lt;span class=&quot;string&quot;&gt;&quot;.go-top&quot;&lt;/span&gt;).click(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    $(&lt;span class=&quot;string&quot;&gt;&quot;html,body&quot;&lt;/span&gt;).animate(&amp;#123;scrollTop:&lt;span class=&quot;string&quot;&gt;&quot;0px&quot;&lt;/span&gt;&amp;#125;,&lt;span class=&quot;string&quot;&gt;&#39;600&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;阻止冒泡&quot;&gt;&lt;a href=&quot;#阻止冒泡&quot; class=&quot;headerlink&quot; title=&quot;阻止冒泡&quot;&gt;&lt;/a&gt;阻止冒泡&lt;/h2&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;stopBubble&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;e&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    e = e || &lt;span class=&quot;built_in&quot;&gt;window&lt;/span&gt;.event;  &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(e.stopPropagation)&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        e.stopPropagation();  &lt;span class=&quot;comment&quot;&gt;//W3C阻止冒泡方法  &lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt; &amp;#123;  &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        e.cancelBubble = &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;; &lt;span class=&quot;comment&quot;&gt;//IE阻止冒泡方法  &lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;  &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;全部替换replaceAll&quot;&gt;&lt;a href=&quot;#全部替换replaceAll&quot; class=&quot;headerlink&quot; title=&quot;全部替换replaceAll&quot;&gt;&lt;/a&gt;全部替换replaceAll&lt;/h2&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; replaceAll = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;bigStr, str1, str2&lt;/span&gt;) &lt;/span&gt;&amp;#123;  &lt;span class=&quot;comment&quot;&gt;//把bigStr中的所有str1替换为str2&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; reg = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;RegExp&lt;/span&gt;(str1, &lt;span class=&quot;string&quot;&gt;&#39;gm&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; bigStr.replace(reg, str2);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;获取浏览器url中的参数值&quot;&gt;&lt;a href=&quot;#获取浏览器url中的参数值&quot; class=&quot;headerlink&quot; title=&quot;获取浏览器url中的参数值&quot;&gt;&lt;/a&gt;获取浏览器url中的参数值&lt;/h2&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; getURLParam = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;name&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;decodeURIComponent&lt;/span&gt;((&lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;RegExp&lt;/span&gt;(&lt;span class=&quot;string&quot;&gt;&#39;[?|&amp;amp;]&#39;&lt;/span&gt; + name + &lt;span class=&quot;string&quot;&gt;&#39;=&#39;&lt;/span&gt; + &lt;span class=&quot;string&quot;&gt;&#39;([^&amp;amp;;]+?)(&amp;amp;|#|;|$)&#39;&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&quot;ig&quot;&lt;/span&gt;).exec(location.search) || [, &lt;span class=&quot;string&quot;&gt;&quot;&quot;&lt;/span&gt;])[&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;].replace(&lt;span class=&quot;regexp&quot;&gt;/\+/g&lt;/span&gt;, &lt;span class=&quot;string&quot;&gt;&#39;%20&#39;&lt;/span&gt;)) || &lt;span class=&quot;literal&quot;&gt;null&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;深度拷贝对象&quot;&gt;&lt;a href=&quot;#深度拷贝对象&quot; class=&quot;headerlink&quot; title=&quot;深度拷贝对象&quot;&gt;&lt;/a&gt;深度拷贝对象&lt;/h2&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;cloneObj&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;obj&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; o = obj.constructor == &lt;span class=&quot;built_in&quot;&gt;Object&lt;/span&gt; ? &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; obj.constructor() : &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; obj.constructor(obj.valueOf());&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; key &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; obj)&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(o[key] != obj[key] )&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;typeof&lt;/span&gt;(obj[key]) == &lt;span class=&quot;string&quot;&gt;&#39;object&#39;&lt;/span&gt; )&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                o[key] = mods.cloneObj(obj[key]);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &amp;#125;&lt;span class=&quot;keyword&quot;&gt;else&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;                o[key] = obj[key];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; o;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;数组去重&quot;&gt;&lt;a href=&quot;#数组去重&quot; class=&quot;headerlink&quot; title=&quot;数组去重&quot;&gt;&lt;/a&gt;数组去重&lt;/h2&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; unique = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;arr&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; result = [], json = &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; (&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; i = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;, len = arr.length; i &amp;lt; len; i++)&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (!json[arr[i]]) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            json[arr[i]] = &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;            result.push(arr[i]);  &lt;span class=&quot;comment&quot;&gt;//返回没被删除的元素&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; result;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;判断数组元素是否重复&quot;&gt;&lt;a href=&quot;#判断数组元素是否重复&quot; class=&quot;headerlink&quot; title=&quot;判断数组元素是否重复&quot;&gt;&lt;/a&gt;判断数组元素是否重复&lt;/h2&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; isRepeat = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;arr&lt;/span&gt;) &lt;/span&gt;&amp;#123;  &lt;span class=&quot;comment&quot;&gt;//arr是否有重复元素&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; hash = &amp;#123;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt; (&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; i &lt;span class=&quot;keyword&quot;&gt;in&lt;/span&gt; arr) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (hash[arr[i]]) &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        hash[arr[i]] = &lt;span class=&quot;literal&quot;&gt;true&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;literal&quot;&gt;false&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;生成随机数&quot;&gt;&lt;a href=&quot;#生成随机数&quot; class=&quot;headerlink&quot; title=&quot;生成随机数&quot;&gt;&lt;/a&gt;生成随机数&lt;/h2&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;title&quot;&gt;randombetween&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;min, max&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; min + (&lt;span class=&quot;built_in&quot;&gt;Math&lt;/span&gt;.random() * (max-min +&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;));&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;操作cookie&quot;&gt;&lt;a href=&quot;#操作cookie&quot; class=&quot;headerlink&quot; title=&quot;操作cookie&quot;&gt;&lt;/a&gt;操作cookie&lt;/h2&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;own.setCookie = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;cname, cvalue, exdays&lt;/span&gt;)&lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; d = &lt;span class=&quot;keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;Date&lt;/span&gt;();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    d.setTime(d.getTime() + (exdays*&lt;span class=&quot;number&quot;&gt;24&lt;/span&gt;*&lt;span class=&quot;number&quot;&gt;60&lt;/span&gt;*&lt;span class=&quot;number&quot;&gt;60&lt;/span&gt;*&lt;span class=&quot;number&quot;&gt;1000&lt;/span&gt;));&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; expires = &lt;span class=&quot;string&quot;&gt;&#39;expires=&#39;&lt;/span&gt;+d.toUTCString();&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.cookie = cname + &lt;span class=&quot;string&quot;&gt;&#39;=&#39;&lt;/span&gt; + cvalue + &lt;span class=&quot;string&quot;&gt;&#39;; &#39;&lt;/span&gt; + expires;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;own.getCookie = &lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;cname&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; name = cname + &lt;span class=&quot;string&quot;&gt;&#39;=&#39;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; ca = &lt;span class=&quot;built_in&quot;&gt;document&lt;/span&gt;.cookie.split(&lt;span class=&quot;string&quot;&gt;&#39;;&#39;&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;for&lt;/span&gt;(&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; i=&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;; i&amp;lt; ca.length; i++) &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; c = ca[i];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;while&lt;/span&gt; (c.charAt(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;) == &lt;span class=&quot;string&quot;&gt;&#39; &#39;&lt;/span&gt;) c = c.substring(&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;        &lt;span class=&quot;keyword&quot;&gt;if&lt;/span&gt; (c.indexOf(name) != &lt;span class=&quot;number&quot;&gt;-1&lt;/span&gt;) &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; c.substring(name.length, c.length);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;#125;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;string&quot;&gt;&#39;&#39;&lt;/span&gt;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h1 id=&quot;知识技巧总结&quot;&gt;&lt;a href=&quot;#知识技巧总结&quot; class=&quot;headerlink&quot; title=&quot;知识技巧总结&quot;&gt;&lt;/a&gt;知识技巧总结&lt;/h1&gt;&lt;h2 id=&quot;数据类型&quot;&gt;&lt;a href=&quot;#数据类型&quot; class=&quot;headerlink&quot; title=&quot;数据类型&quot;&gt;&lt;/a&gt;数据类型&lt;/h2&gt;&lt;p&gt;underfined、null、0、false、NaN、空字符串。他们的逻辑非结果均为true。&lt;/p&gt;
+&lt;h2 id=&quot;闭包格式&quot;&gt;&lt;a href=&quot;#闭包格式&quot; class=&quot;headerlink&quot; title=&quot;闭包格式&quot;&gt;&lt;/a&gt;闭包格式&lt;/h2&gt;&lt;p&gt;好处：避免命名冲突（全局变量污染）。&lt;/p&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;a, b&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;built_in&quot;&gt;console&lt;/span&gt;.log(a+b);  &lt;span class=&quot;comment&quot;&gt;//30&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;)(&lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;20&lt;/span&gt;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;截取和清空数组&quot;&gt;&lt;a href=&quot;#截取和清空数组&quot; class=&quot;headerlink&quot; title=&quot;截取和清空数组&quot;&gt;&lt;/a&gt;截取和清空数组&lt;/h2&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; arr = [&lt;span class=&quot;number&quot;&gt;12&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;222&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;44&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;88&lt;/span&gt;];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;arr.length = &lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;;   &lt;span class=&quot;comment&quot;&gt;//截取，arr = [12, 222];  &lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;arr.length = &lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;;   &lt;span class=&quot;comment&quot;&gt;//清空，arr will be equal to [].&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;获取数组的最大最小值&quot;&gt;&lt;a href=&quot;#获取数组的最大最小值&quot; class=&quot;headerlink&quot; title=&quot;获取数组的最大最小值&quot;&gt;&lt;/a&gt;获取数组的最大最小值&lt;/h2&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; numbers = [&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;45822&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;120&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;-215&lt;/span&gt;];&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; maxInNumbers = &lt;span class=&quot;built_in&quot;&gt;Math&lt;/span&gt;.max.apply(&lt;span class=&quot;built_in&quot;&gt;Math&lt;/span&gt;, numbers);   &lt;span class=&quot;comment&quot;&gt;//45822&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; minInNumbers = &lt;span class=&quot;built_in&quot;&gt;Math&lt;/span&gt;.min.apply(&lt;span class=&quot;built_in&quot;&gt;Math&lt;/span&gt;, numbers);   &lt;span class=&quot;comment&quot;&gt;//-215&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;浮点数计算问题&quot;&gt;&lt;a href=&quot;#浮点数计算问题&quot; class=&quot;headerlink&quot; title=&quot;浮点数计算问题&quot;&gt;&lt;/a&gt;浮点数计算问题&lt;/h2&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;0.1&lt;/span&gt; + &lt;span class=&quot;number&quot;&gt;0.2&lt;/span&gt; == &lt;span class=&quot;number&quot;&gt;0.3&lt;/span&gt;   &lt;span class=&quot;comment&quot;&gt;//false&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;为什么呢？因为0.1+0.2等于0.30000000000000004。JavaScript的数字都遵循IEEE 754标准构建，在内部都是64位浮点小数表示。可以通过使用&lt;code&gt;toFixed()&lt;/code&gt;来解决这个问题。&lt;/p&gt;
+&lt;h2 id=&quot;数组排序sort函数&quot;&gt;&lt;a href=&quot;#数组排序sort函数&quot; class=&quot;headerlink&quot; title=&quot;数组排序sort函数&quot;&gt;&lt;/a&gt;数组排序sort函数&lt;/h2&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; arr = [&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;, &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;];    &lt;span class=&quot;comment&quot;&gt;//数字数组&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;arr.sort(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;a, b&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; a - b;   &lt;span class=&quot;comment&quot;&gt;//从小到大排&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; b - a;   &lt;span class=&quot;comment&quot;&gt;//从大到小排&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;built_in&quot;&gt;Math&lt;/span&gt;.random() - &lt;span class=&quot;number&quot;&gt;0.5&lt;/span&gt;;   &lt;span class=&quot;comment&quot;&gt;//数组洗牌&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; arr = [&amp;#123;   &lt;span class=&quot;comment&quot;&gt;//对象数组&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    num: &lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    text: &lt;span class=&quot;string&quot;&gt;&#39;num1&#39;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;, &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    num: &lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    text: &lt;span class=&quot;string&quot;&gt;&#39;num2&#39;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;, &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    num: &lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    text: &lt;span class=&quot;string&quot;&gt;&#39;num3&#39;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;, &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    num: &lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;,&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    text: &lt;span class=&quot;string&quot;&gt;&#39;num4&#39;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;];   &lt;/div&gt;&lt;div class=&quot;line&quot;&gt;arr.sort(&lt;span class=&quot;function&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;function&lt;/span&gt;(&lt;span class=&quot;params&quot;&gt;a, b&lt;/span&gt;) &lt;/span&gt;&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; a.num - b.num;   &lt;span class=&quot;comment&quot;&gt;//从小到大排&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;keyword&quot;&gt;return&lt;/span&gt; b.num - a.num;   &lt;span class=&quot;comment&quot;&gt;//从大到小排&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;);&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h2 id=&quot;对象和字符串的转换&quot;&gt;&lt;a href=&quot;#对象和字符串的转换&quot; class=&quot;headerlink&quot; title=&quot;对象和字符串的转换&quot;&gt;&lt;/a&gt;对象和字符串的转换&lt;/h2&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; obj = &amp;#123;a: &lt;span class=&quot;string&quot;&gt;&#39;aaa&#39;&lt;/span&gt;, b: &lt;span class=&quot;string&quot;&gt;&#39;bbb&#39;&lt;/span&gt;&amp;#125;;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; objStr = &lt;span class=&quot;built_in&quot;&gt;JSON&lt;/span&gt;.stringify(obj);    &lt;span class=&quot;comment&quot;&gt;// &quot;&amp;#123;&quot;a&quot;:&quot;aaa&quot;,&quot;b&quot;:&quot;bbb&quot;&amp;#125;&quot;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;keyword&quot;&gt;var&lt;/span&gt; newObj = &lt;span class=&quot;built_in&quot;&gt;JSON&lt;/span&gt;.parse(objStr);     &lt;span class=&quot;comment&quot;&gt;// &amp;#123;a: &quot;aaa&quot;, b: &quot;bbb&quot;&amp;#125;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h1 id=&quot;git笔记&quot;&gt;&lt;a href=&quot;#git笔记&quot; class=&quot;headerlink&quot; title=&quot;git笔记&quot;&gt;&lt;/a&gt;git笔记&lt;/h1&gt;&lt;h2 id=&quot;git使用之前的配置&quot;&gt;&lt;a href=&quot;#git使用之前的配置&quot; class=&quot;headerlink&quot; title=&quot;git使用之前的配置&quot;&gt;&lt;/a&gt;git使用之前的配置&lt;/h2&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;1.&lt;/span&gt;git config --global user.email xxx@&lt;span class=&quot;number&quot;&gt;163.&lt;/span&gt;com&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;2.&lt;/span&gt;git config --global user.name xxx&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;3.&lt;/span&gt;ssh-keygen -t rsa -C xxx@&lt;span class=&quot;number&quot;&gt;163.&lt;/span&gt;com(邮箱地址)      &lt;span class=&quot;comment&quot;&gt;// 生成ssh&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;4.&lt;/span&gt;找到.ssh文件夹打开，使用cat id_rsa.pub    &lt;span class=&quot;comment&quot;&gt;//打开公钥ssh串&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;5.&lt;/span&gt;登陆github，settings － SSH keys  － add ssh keys （把上面的内容全部添加进去即可）&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&lt;code&gt;说明：然后这个邮箱（xxxxx@gmail.com）对应的账号在github上就有权限对仓库进行操作了。可以尽情的进行下面的git命令了。&lt;/code&gt;&lt;/p&gt;
+&lt;h2 id=&quot;git常用命令&quot;&gt;&lt;a href=&quot;#git常用命令&quot; class=&quot;headerlink&quot; title=&quot;git常用命令&quot;&gt;&lt;/a&gt;git常用命令&lt;/h2&gt;&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;1&lt;/span&gt;、git config user.name  /  user.email     &lt;span class=&quot;comment&quot;&gt;//查看当前git的用户名称、邮箱&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;2&lt;/span&gt;、git clone https:&lt;span class=&quot;comment&quot;&gt;//github.com/jarson7426/javascript.git  project  //clone仓库到本地。&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;3&lt;/span&gt;、修改本地代码，提交到分支:  git add file   /   git commit -m “新增文件”&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;4&lt;/span&gt;、把本地库推送到远程库:  git push origin master&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;5&lt;/span&gt;、查看提交日志：git log &lt;span class=&quot;number&quot;&gt;-5&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;6&lt;/span&gt;、返回某一个版本：git reset --hard &lt;span class=&quot;number&quot;&gt;123&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;7&lt;/span&gt;、分支：git branch / git checkout name  / git checkout -b dev&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;8&lt;/span&gt;、合并name分支到当前分支：git merge name   /   git pull origin&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;9&lt;/span&gt;、删除本地分支：git branch -D name&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;10&lt;/span&gt;、删除远程分支： git push origin  :daily/x.x.x&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;11&lt;/span&gt;、git checkout -b mydev origin/daily/&lt;span class=&quot;number&quot;&gt;1.0&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.0&lt;/span&gt;    &lt;span class=&quot;comment&quot;&gt;//把远程daily分支映射到本地mydev分支进行开发&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;12&lt;/span&gt;、合并远程分支到当前分支 git pull origin daily/&lt;span class=&quot;number&quot;&gt;1.1&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.1&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;13&lt;/span&gt;、发布到线上：&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    git tag publish/&lt;span class=&quot;number&quot;&gt;0.1&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.5&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    git push origin publish/&lt;span class=&quot;number&quot;&gt;0.1&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.5&lt;/span&gt;:publish/&lt;span class=&quot;number&quot;&gt;0.1&lt;/span&gt;&lt;span class=&quot;number&quot;&gt;.5&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;number&quot;&gt;14&lt;/span&gt;、线上代码覆盖到本地：&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    git checkout --theirs build/scripts/ddos&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    git checkout --theirs src/app/ddos&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;h1 id=&quot;结语&quot;&gt;&lt;a href=&quot;#结语&quot; class=&quot;headerlink&quot; title=&quot;结语&quot;&gt;&lt;/a&gt;结语&lt;/h1&gt;&lt;p&gt;希望本文总结的内容能给各位看官带来焕然一新的感觉。另外，如果你们有什么值得推荐的js技巧，欢迎在评论中补充，我可以收纳在本文中。&lt;/p&gt;
+&lt;p&gt;PS：此文档会持续新增内容。&lt;/p&gt;
+&lt;hr&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;hr&gt;
+&lt;p&gt;学习和工作的过程中总结的干货，包括常用函数、常用js技巧、常用正则表达式、git笔记等。为刚接触前端的童鞋们提供一个简单的查询的途径，也以此来缅怀我的前端学习之路。&lt;br&gt;PS：此文档，我会持续更新。&lt;br&gt;
+    
+    </summary>
+    
+      <category term="工作" scheme="http://yoursite.com/categories/work/"/>
+    
+    
+      <category term="javascript" scheme="http://yoursite.com/tags/javascript/"/>
+    
+      <category term="干货总结" scheme="http://yoursite.com/tags/%E5%B9%B2%E8%B4%A7%E6%80%BB%E7%BB%93/"/>
+    
+  </entry>
+  
+  <entry>
     <title>开发自己的yeoman脚手架（generator-reactpackage）</title>
     <link href="http://yoursite.com/work/2016-09-01/yeoman-reactpackage.html"/>
     <id>http://yoursite.com/work/2016-09-01/yeoman-reactpackage.html</id>
     <published>2016-09-01T03:55:33.000Z</published>
-    <updated>2016-09-01T04:07:08.000Z</updated>
+    <updated>2016-10-12T15:08:52.000Z</updated>
     
     <content type="html">&lt;hr&gt;
 &lt;p&gt;自从前后端开始分离之后，前端项目工程化也显得越来越重要了，之前写过一篇搭建基于&lt;code&gt;Angular+Requirejs+Grunt&lt;/code&gt;的前端项目教程，有兴趣的可以&lt;a href=&quot;http://luckykun.com/work/2016-05-02/grunt-angular.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;点这里去看&lt;/a&gt;&lt;/p&gt;
@@ -90,6 +149,7 @@
 &lt;/ul&gt;
 &lt;h1 id=&quot;结语&quot;&gt;&lt;a href=&quot;#结语&quot; class=&quot;headerlink&quot; title=&quot;结语&quot;&gt;&lt;/a&gt;结语&lt;/h1&gt;&lt;p&gt;可以看到，定义一个自己常用的脚手架骑士挺简单的，还有更多的功能有待探索。&lt;code&gt;generator-reactpackage&lt;/code&gt;是一个基于webpack+react+es6开发的项目模版，有需要用到这个模版的同学就赶快安装用起来吧。&lt;/p&gt;
 &lt;p&gt;另外，它的源码已经上传到github上，喜欢&lt;a href=&quot;https://github.com/luckykun/generator-reactpackage&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;generator-reactpackage&lt;/a&gt;的同学顺便给个star，多谢～～～&lt;/p&gt;
+&lt;hr&gt;
 </content>
     
     <summary type="html">
@@ -120,7 +180,7 @@
     <link href="http://yoursite.com/work/2016-09-01/canvas-study01.html"/>
     <id>http://yoursite.com/work/2016-09-01/canvas-study01.html</id>
     <published>2016-09-01T03:07:56.000Z</published>
-    <updated>2016-09-01T03:27:34.000Z</updated>
+    <updated>2016-10-11T16:28:26.000Z</updated>
     
     <content type="html">&lt;hr&gt;
 &lt;p&gt;其实canvas本身很简单，就是去学习它的API，多看实例，多自己动手练习，多总结。但是canvas的API实在是有点多，对于初学者来说，可能学到一半就止步不前了。我也有这种感觉，在学习的过程中，编写实例，用到了其中很多的属性和方法，但是回头来看的时候总觉得什么也没用。所以决定系统性的记录一下它常用到的API，方便以后查阅，也顺便造福一下大家。&lt;/p&gt;
@@ -224,6 +284,7 @@
 &lt;/ul&gt;
 &lt;h1 id=&quot;结语&quot;&gt;&lt;a href=&quot;#结语&quot; class=&quot;headerlink&quot; title=&quot;结语&quot;&gt;&lt;/a&gt;结语&lt;/h1&gt;&lt;p&gt;这些API已经包含了大部分常用的了，结合requestAnimationFrame函数已经可以绘制很多酷炫的效果了。但是光看这些API很简单，但是想要在绘制游戏或者动画中用起来得心应手还需要看大量的实例，自己实践总结的。&lt;/p&gt;
 &lt;p&gt;本文就到这里，感谢各位看官～&lt;/p&gt;
+&lt;hr&gt;
 </content>
     
     <summary type="html">
@@ -248,7 +309,7 @@
     <link href="http://yoursite.com/work/2016-08-16/file-upload.html"/>
     <id>http://yoursite.com/work/2016-08-16/file-upload.html</id>
     <published>2016-08-16T11:41:57.000Z</published>
-    <updated>2016-08-16T16:40:08.000Z</updated>
+    <updated>2016-10-11T16:28:56.000Z</updated>
     
     <content type="html">&lt;hr&gt;
 &lt;h1 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h1&gt;&lt;p&gt;话说现在很多很多项目需要用到文件上传，自从有了HTML5之后，上传就变的超级简单了。HTML5支持多图片上传，而且支持ajax上传！而且支持上传之前图片的预览！而且支持图片拖拽上传！而且还是纯粹利用file控件实现！而且代码还超级简单！！！原谅我这个没见过世面的人这么激动==，但是说真的，有这么多优点，想不让人称赞都难啊！&lt;/p&gt;
@@ -259,7 +320,7 @@
 &lt;p&gt;但是！！！IE9以下的版本不支持呀！！&lt;/p&gt;
 &lt;p&gt;除此之外，上面的方法还有一个弊端，因为使用了ajax的上传方式，所以不能支持跨域上传，如果必须要满足这两个业务场景，那就试试下面的方法吧，借助form和iframe来实现上传。下面来详细看一下：&lt;/p&gt;
 &lt;h1 id=&quot;form表单提交到iframe&quot;&gt;&lt;a href=&quot;#form表单提交到iframe&quot; class=&quot;headerlink&quot; title=&quot;form表单提交到iframe&quot;&gt;&lt;/a&gt;form表单提交到iframe&lt;/h1&gt;&lt;p&gt;html代码:&lt;/p&gt;
-&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;iframe name=&lt;span class=&quot;string&quot;&gt;&quot;demoIframe&quot;&lt;/span&gt; style=&lt;span class=&quot;string&quot;&gt;&quot;display:none&quot;&lt;/span&gt;&amp;gt;&amp;lt;/iframe&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;form target=&lt;span class=&quot;string&quot;&gt;&quot;demoIframe&quot;&lt;/span&gt; action=&lt;span class=&quot;string&quot;&gt;&quot;upload.php&quot;&lt;/span&gt; method=&lt;span class=&quot;string&quot;&gt;&quot;post&quot;&lt;/span&gt; enctype=&lt;span class=&quot;string&quot;&gt;&quot;multipart/form-data&quot;&lt;/span&gt;&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;input class=&quot;filename&quot; type=&quot;file&quot; name=&quot;fileLabel&quot;&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &amp;lt;input type=&quot;submit&quot; value=&quot;提交&quot;&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;/form&amp;gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;iframe name=&lt;span class=&quot;string&quot;&gt;&quot;demoIframe&quot;&lt;/span&gt; style=&lt;span class=&quot;string&quot;&gt;&quot;display:none&quot;&lt;/span&gt;&amp;gt;&lt;span class=&quot;xml&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;iframe&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;lt;form target=&lt;span class=&quot;string&quot;&gt;&quot;demoIframe&quot;&lt;/span&gt; action=&lt;span class=&quot;string&quot;&gt;&quot;upload.php&quot;&lt;/span&gt; method=&lt;span class=&quot;string&quot;&gt;&quot;post&quot;&lt;/span&gt; enctype=&lt;span class=&quot;string&quot;&gt;&quot;multipart/form-data&quot;&lt;/span&gt;&amp;gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;xml&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;input&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;class&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;filename&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;type&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;file&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;name&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;fileLabel&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    &lt;span class=&quot;tag&quot;&gt;&amp;lt;&lt;span class=&quot;name&quot;&gt;input&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;type&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;submit&quot;&lt;/span&gt; &lt;span class=&quot;attr&quot;&gt;value&lt;/span&gt;=&lt;span class=&quot;string&quot;&gt;&quot;提交&quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&lt;span class=&quot;tag&quot;&gt;&amp;lt;/&lt;span class=&quot;name&quot;&gt;form&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;我们点击提交,可以看到下面的请求：&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;https://img.alicdn.com/tps/TB1DHQaMpXXXXcaXVXXXXXXXXXX-794-199.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
 &lt;p&gt;已经把文件上传。那么，加入这个upload.php接口可用，而且假如上传成功后，会返回：&lt;/p&gt;
@@ -282,6 +343,8 @@
     
     
       <category term="javascript" scheme="http://yoursite.com/tags/javascript/"/>
+    
+      <category term="干货总结" scheme="http://yoursite.com/tags/%E5%B9%B2%E8%B4%A7%E6%80%BB%E7%BB%93/"/>
     
       <category term="文件上传" scheme="http://yoursite.com/tags/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0/"/>
     
@@ -447,7 +510,7 @@
     <link href="http://yoursite.com/work/2016-07-23/css3-study02.html"/>
     <id>http://yoursite.com/work/2016-07-23/css3-study02.html</id>
     <published>2016-07-23T09:41:57.000Z</published>
-    <updated>2016-08-14T09:41:19.000Z</updated>
+    <updated>2016-10-12T15:34:27.000Z</updated>
     
     <content type="html">&lt;hr&gt;
 &lt;p&gt;CSS3系列已经学习了一段时间了，第一篇文章写了一些css3的奇技淫巧，&lt;a href=&quot;http://luckykun.com/work/2016-07-04/css3-study01.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;原文戳这里&lt;/a&gt;，还获得了较多网友的支持，在此谢过各位，你们的支持是我写文章最大的动力^_^。&lt;/p&gt;
@@ -532,19 +595,19 @@
 &lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;.top &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    left: &lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;px;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    top: &lt;span class=&quot;number&quot;&gt;-200&lt;/span&gt;px;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    transform: rotateX(&lt;span class=&quot;number&quot;&gt;-90&lt;/span&gt;deg);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    transform-origin: bottom;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;立方体底面&lt;/p&gt;
-&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;.top &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    left: &lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;px;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    bottom: &lt;span class=&quot;number&quot;&gt;-200&lt;/span&gt;px;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    transform: rotateX(&lt;span class=&quot;number&quot;&gt;90&lt;/span&gt;deg);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    transform-origin: top;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;.bottom &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    left: &lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;px;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    bottom: &lt;span class=&quot;number&quot;&gt;-200&lt;/span&gt;px;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    transform: rotateX(&lt;span class=&quot;number&quot;&gt;90&lt;/span&gt;deg);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    transform-origin: top;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;立方体左面&lt;/p&gt;
-&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;.top &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    left: &lt;span class=&quot;number&quot;&gt;-200&lt;/span&gt;px;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    top: &lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;px;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    transform: rotateY(&lt;span class=&quot;number&quot;&gt;90&lt;/span&gt;deg);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    transform-origin: right;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;.left &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    left: &lt;span class=&quot;number&quot;&gt;-200&lt;/span&gt;px;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    top: &lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;px;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    transform: rotateY(&lt;span class=&quot;number&quot;&gt;90&lt;/span&gt;deg);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    transform-origin: right;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;立方体右面&lt;/p&gt;
-&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;.top &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    left: &lt;span class=&quot;number&quot;&gt;600&lt;/span&gt;px;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    top: &lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;px;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    transform: rotateY(&lt;span class=&quot;number&quot;&gt;-90&lt;/span&gt;deg);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    transform-origin: left;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;.right &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    left: &lt;span class=&quot;number&quot;&gt;600&lt;/span&gt;px;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    top: &lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;px;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    transform: rotateY(&lt;span class=&quot;number&quot;&gt;-90&lt;/span&gt;deg);&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    transform-origin: left;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;立方体前面&lt;/p&gt;
-&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;.top &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    left: &lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;px;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    top: &lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;px;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    transform: translateZ(&lt;span class=&quot;number&quot;&gt;400&lt;/span&gt;px);  &lt;span class=&quot;comment&quot;&gt;//立方体前面正对着屏幕，所以不用旋转，只需向Z轴前移动距离&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;.front &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    left: &lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;px;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    top: &lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;px;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    transform: translateZ(&lt;span class=&quot;number&quot;&gt;400&lt;/span&gt;px);  &lt;span class=&quot;comment&quot;&gt;//立方体前面正对着屏幕，所以不用旋转，只需向Z轴前移动距离&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;p&gt;立方体后面&lt;/p&gt;
-&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;.top &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    left: &lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;px;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    top: &lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;px;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    transform: translateZ(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;);   &lt;span class=&quot;comment&quot;&gt;//立方体后面正对着屏幕，所以不用旋转，只需向Z轴后移动距离&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;.back &amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    left: &lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;px;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    top: &lt;span class=&quot;number&quot;&gt;200&lt;/span&gt;px;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    transform: translateZ(&lt;span class=&quot;number&quot;&gt;0&lt;/span&gt;);   &lt;span class=&quot;comment&quot;&gt;//立方体后面正对着屏幕，所以不用旋转，只需向Z轴后移动距离&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;  最后别忘了给每个不同面加上图片，位置什么的再稍微调一下，这个酷炫的立方体就大功告成了。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -554,6 +617,7 @@
 &lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;.container&amp;#123;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;    animation: rotate-frame &lt;span class=&quot;number&quot;&gt;30&lt;/span&gt;s linear infinite;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;&amp;#125;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;h1 id=&quot;总结&quot;&gt;&lt;a href=&quot;#总结&quot; class=&quot;headerlink&quot; title=&quot;总结&quot;&gt;&lt;/a&gt;总结&lt;/h1&gt;&lt;p&gt;总而言之，在我学习CSS3的过程中，见到了不少的新特性，也学会了如何使用，但是我想说的是我们不管要学会怎么使用，更要去理解每一行代码为什么产生对应的效果，特别是对于&lt;code&gt;3D transform&lt;/code&gt;，我们要从根本去理解了&lt;code&gt;3D空间&lt;/code&gt;，才能更好的去掌握它的每一个属性值能够带来的效果。&lt;/p&gt;
 &lt;p&gt;这篇文章内容稍微有点多，自己记录这篇文章的同时又对这个效果学习巩固了一篇，还是蛮开心哒。同时也希望能对各位看官在以后学习&lt;code&gt;3D transform&lt;/code&gt;的道路上起到一点点作用！&lt;/p&gt;
+&lt;hr&gt;
 </content>
     
     <summary type="html">
@@ -581,7 +645,7 @@
     <link href="http://yoursite.com/work/2016-07-10/hexo-faster.html"/>
     <id>http://yoursite.com/work/2016-07-10/hexo-faster.html</id>
     <published>2016-07-10T09:47:20.000Z</published>
-    <updated>2016-07-11T14:54:59.000Z</updated>
+    <updated>2016-10-11T16:29:18.000Z</updated>
     
     <content type="html">&lt;hr&gt;
 &lt;p&gt;刚开始搭建博客的时候觉得很好玩，可是玩的久了，问题慢慢就出来了，就跟谈恋爱一样＝＝。比如现在我访问博客的时候就感觉慢的要死，不可否认，使用hexo搭建服务器方便快捷，但是由于github作为服务器，也会有速度稍慢的代价产生。既然我不能放弃github，那就只有另寻出路了，作为一名前端，有哪些地方我们可以自己来优化呢？&lt;/p&gt;
@@ -633,6 +697,7 @@
 &lt;h1 id=&quot;博客优化-1&quot;&gt;&lt;a href=&quot;#博客优化-1&quot; class=&quot;headerlink&quot; title=&quot;博客优化&quot;&gt;&lt;/a&gt;博客优化&lt;/h1&gt;&lt;p&gt;优化之后，然后每次添加文章之后，编译发布之间需要多一个命令来压缩这些文件，总结了一下，详细如下：&lt;/p&gt;
 &lt;figure class=&quot;highlight js&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;hexo clean      &lt;span class=&quot;comment&quot;&gt;//清除public文件夹&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;hexo g       &lt;span class=&quot;comment&quot;&gt;//编译文章，生成public文件夹&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;gulp build     &lt;span class=&quot;comment&quot;&gt;//压缩js、css、img文件&lt;/span&gt;&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;hexo d      &lt;span class=&quot;comment&quot;&gt;//部署到github&lt;/span&gt;&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
 &lt;p&gt;最后再去测试一下网站的访问速度，可以看出比之前已经快了不少了，截图如下：&lt;br&gt;&lt;img src=&quot;https://img.alicdn.com/tps/TB1iMayKVXXXXX.XXXXXXXXXXXX-795-86.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;hr&gt;
 </content>
     
     <summary type="html">
@@ -646,9 +711,9 @@
       <category term="工作" scheme="http://yoursite.com/categories/work/"/>
     
     
-      <category term="hexo系列" scheme="http://yoursite.com/tags/hexo%E7%B3%BB%E5%88%97/"/>
-    
       <category term="教程" scheme="http://yoursite.com/tags/%E6%95%99%E7%A8%8B/"/>
+    
+      <category term="hexo系列" scheme="http://yoursite.com/tags/hexo%E7%B3%BB%E5%88%97/"/>
     
   </entry>
   
@@ -657,7 +722,7 @@
     <link href="http://yoursite.com/work/2016-07-04/css3-study01.html"/>
     <id>http://yoursite.com/work/2016-07-04/css3-study01.html</id>
     <published>2016-07-04T14:39:19.000Z</published>
-    <updated>2016-07-10T09:52:10.000Z</updated>
+    <updated>2016-10-11T16:28:35.000Z</updated>
     
     <content type="html">&lt;hr&gt;
 &lt;p&gt;自CSS3流行以来，虽然以前看过一遍所有的新增属性，但其实在实际项目中用到的少之又少。所以没有形成系统性的认识，以及看到效果立马就能想到解决方案的能力。然后最近正好遇到一个需要绘制大量动画的需求，所以决定趁此机会好好研究一下这个既熟悉又陌生的css3。&lt;/p&gt;
@@ -730,6 +795,7 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1 id=&quot;总结&quot;&gt;&lt;a href=&quot;#总结&quot; class=&quot;headerlink&quot; title=&quot;总结&quot;&gt;&lt;/a&gt;总结&lt;/h1&gt;&lt;p&gt;通过这段时间对css3的深入了解，发现css3真的很强大，研究起来还是挺有趣的，只有想不到，感觉没有做不到。不过为了实现很酷炫的效果，可能需要编写大量的css代码，这个时候使用什么技术就需要我们自己来衡量了。&lt;/p&gt;
+&lt;hr&gt;
 </content>
     
     <summary type="html">
@@ -819,7 +885,7 @@
     <link href="http://yoursite.com/work/2016-05-29/tiny-heart-study.html"/>
     <id>http://yoursite.com/work/2016-05-29/tiny-heart-study.html</id>
     <published>2016-05-29T01:41:43.000Z</published>
-    <updated>2016-09-01T03:10:23.000Z</updated>
+    <updated>2016-10-11T16:30:05.000Z</updated>
     
     <content type="html">&lt;hr&gt;
 &lt;p&gt;最近除了做业务，也在尝试学习h5和移动端，在这个过程中，学到了很多，利用h5和canvas做了一个爱心鱼的小游戏。源码在github上，down下来直接就能够运行。要是觉得还行，就给个star吧！&lt;a href=&quot;https://github.com/luckykun/tinyHeart&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;源码地址点这里&lt;/a&gt;&lt;/p&gt;
@@ -914,6 +980,7 @@
 &lt;/ul&gt;
 &lt;h1 id=&quot;总结&quot;&gt;&lt;a href=&quot;#总结&quot; class=&quot;headerlink&quot; title=&quot;总结&quot;&gt;&lt;/a&gt;总结&lt;/h1&gt;&lt;p&gt;好啦，整个游戏的制作过程就分享完了，做的过程中有遇到过很多问题，不过都一一解决了，加深了很多以前模糊的概念，也学到了很多新的知识，比如使用rgba()来一起控制颜色和透明度，以前还真没用到过。&lt;/p&gt;
 &lt;p&gt;这个游戏本身功能比较简单，但是动画还算比较酷炫。这也算是一个比较基本的动画基础框架了，而比较不容易理解的地方也有很多，比如求趋近的角度函数&lt;code&gt;lerpAngle(a,b,c)&lt;/code&gt;，还有&lt;code&gt;Math.atan2()&lt;/code&gt;这个函数，等等。 欢迎大家提出bug或者改进建议～～～&lt;/p&gt;
+&lt;hr&gt;
 </content>
     
     <summary type="html">
@@ -940,7 +1007,7 @@
     <link href="http://yoursite.com/work/2016-05-23/react-todo-study.html"/>
     <id>http://yoursite.com/work/2016-05-23/react-todo-study.html</id>
     <published>2016-05-23T14:11:51.000Z</published>
-    <updated>2016-07-23T09:50:26.000Z</updated>
+    <updated>2016-10-11T16:29:52.000Z</updated>
     
     <content type="html">&lt;hr&gt;
 &lt;blockquote&gt;
@@ -1022,6 +1089,7 @@
 &lt;li&gt;&lt;a href=&quot;http://wiki.jikexueyuan.com/project/react-tutorial/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://wiki.jikexueyuan.com/project/react-tutorial/&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;http://gank.io/post/564151c1f1df1210001c9161&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://gank.io/post/564151c1f1df1210001c9161&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;hr&gt;
 </content>
     
     <summary type="html">
@@ -1038,9 +1106,9 @@
       <category term="工作" scheme="http://yoursite.com/categories/work/"/>
     
     
-      <category term="es6" scheme="http://yoursite.com/tags/es6/"/>
-    
       <category term="教程" scheme="http://yoursite.com/tags/%E6%95%99%E7%A8%8B/"/>
+    
+      <category term="es6" scheme="http://yoursite.com/tags/es6/"/>
     
       <category term="react" scheme="http://yoursite.com/tags/react/"/>
     
@@ -1051,7 +1119,7 @@
     <link href="http://yoursite.com/work/2016-05-20/hexo-advance.html"/>
     <id>http://yoursite.com/work/2016-05-20/hexo-advance.html</id>
     <published>2016-05-20T15:11:51.000Z</published>
-    <updated>2016-05-21T15:55:46.000Z</updated>
+    <updated>2016-10-11T16:29:11.000Z</updated>
     
     <content type="html">&lt;hr&gt;
 &lt;p&gt;之前我已经写了一篇文章详细的讲述了如何使用hexo搭建github博客。如果还没有看的可以去看看，&lt;a href=&quot;/work/2016-04-23/heoll-hexo.html&quot;&gt;hexo搭建博客&lt;/a&gt;&lt;/p&gt;
@@ -1083,6 +1151,7 @@
 &lt;h2 id=&quot;添加CNAME&quot;&gt;&lt;a href=&quot;#添加CNAME&quot; class=&quot;headerlink&quot; title=&quot;添加CNAME&quot;&gt;&lt;/a&gt;添加CNAME&lt;/h2&gt;&lt;p&gt;然后回到博客项目根目录，在&lt;code&gt;source/&lt;/code&gt;下新建一个名为&lt;code&gt;CNAME&lt;/code&gt;的文件，里面的内容写入&lt;code&gt;luckykun.com&lt;/code&gt;即可。&lt;/p&gt;
 &lt;p&gt;然后在浏览器输入luckykun.com，即可代替之前的github.io的域名，访问到自己的博客页面了。实在是台、太cool了！&lt;/p&gt;
 &lt;h1 id=&quot;结语&quot;&gt;&lt;a href=&quot;#结语&quot; class=&quot;headerlink&quot; title=&quot;结语&quot;&gt;&lt;/a&gt;结语&lt;/h1&gt;&lt;p&gt;好的，文章写道这里就结束了，感谢大家的阅读，如果文章能给大家带来帮助就最好了，如果读者还有任何疑问，欢迎留言，我会尽力解答。再见啦～～&lt;/p&gt;
+&lt;hr&gt;
 </content>
     
     <summary type="html">
@@ -1097,9 +1166,9 @@
       <category term="工作" scheme="http://yoursite.com/categories/work/"/>
     
     
-      <category term="hexo系列" scheme="http://yoursite.com/tags/hexo%E7%B3%BB%E5%88%97/"/>
-    
       <category term="教程" scheme="http://yoursite.com/tags/%E6%95%99%E7%A8%8B/"/>
+    
+      <category term="hexo系列" scheme="http://yoursite.com/tags/hexo%E7%B3%BB%E5%88%97/"/>
     
   </entry>
   
@@ -1108,7 +1177,7 @@
     <link href="http://yoursite.com/work/2016-05-14/weixin-share.html"/>
     <id>http://yoursite.com/work/2016-05-14/weixin-share.html</id>
     <published>2016-05-14T02:33:46.000Z</published>
-    <updated>2016-05-21T15:49:36.000Z</updated>
+    <updated>2016-10-11T16:28:11.000Z</updated>
     
     <content type="html">&lt;hr&gt;
 &lt;p&gt;最近要慢慢开始做移动端的一些页面了，并且大多数都是活动页面，需要在微信里面分享、传播。&lt;/p&gt;
@@ -1170,9 +1239,9 @@
     
       <category term="javascript" scheme="http://yoursite.com/tags/javascript/"/>
     
-      <category term="微信分享" scheme="http://yoursite.com/tags/%E5%BE%AE%E4%BF%A1%E5%88%86%E4%BA%AB/"/>
-    
       <category term="插件" scheme="http://yoursite.com/tags/%E6%8F%92%E4%BB%B6/"/>
+    
+      <category term="微信分享" scheme="http://yoursite.com/tags/%E5%BE%AE%E4%BF%A1%E5%88%86%E4%BA%AB/"/>
     
   </entry>
   
@@ -1181,7 +1250,7 @@
     <link href="http://yoursite.com/work/2016-05-13/atom-edit.html"/>
     <id>http://yoursite.com/work/2016-05-13/atom-edit.html</id>
     <published>2016-05-13T02:11:00.000Z</published>
-    <updated>2016-05-15T07:18:36.000Z</updated>
+    <updated>2016-10-11T16:28:20.000Z</updated>
     
     <content type="html">&lt;hr&gt;
 &lt;p&gt;周末闲着没事，逛论坛发现了一个新的编辑器，由github发布的Atom编辑器。瞬间被吸引了，所以就去尝试着折腾了一下，后来发现这个编辑器确实很不错，他的特点就是两个字：&lt;code&gt;优美！！！&lt;/code&gt;&lt;/p&gt;
@@ -1556,9 +1625,9 @@
     
       <category term="demo" scheme="http://yoursite.com/tags/demo/"/>
     
-      <category term="插件" scheme="http://yoursite.com/tags/%E6%8F%92%E4%BB%B6/"/>
-    
       <category term="highcharts" scheme="http://yoursite.com/tags/highcharts/"/>
+    
+      <category term="插件" scheme="http://yoursite.com/tags/%E6%8F%92%E4%BB%B6/"/>
     
   </entry>
   
@@ -1567,7 +1636,7 @@
     <link href="http://yoursite.com/life/2016-05-11/life-miss-bike.html"/>
     <id>http://yoursite.com/life/2016-05-11/life-miss-bike.html</id>
     <published>2016-05-11T14:59:22.000Z</published>
-    <updated>2016-07-12T14:07:09.000Z</updated>
+    <updated>2016-10-11T16:29:38.000Z</updated>
     
     <content type="html">&lt;hr&gt;
 &lt;blockquote&gt;
@@ -1590,6 +1659,7 @@
 &lt;p&gt;如果妈妈你看到这篇文章，请不要怪我，我不是故意的，我也很伤心。但是，除了伤心，我还会有决定，我会做兼职，把钱赚回来，至少把自行车的钱赚回来。所以，请你下次打电话时不要再拿这件事说我了，哭…&lt;/p&gt;
 &lt;p&gt;好了，这篇日志过后，我就不会再郁闷了，重新振作，千万不能让小偷再看见我伤心样子，那样他会更加猖狂的。&lt;/p&gt;
 &lt;p&gt;最后，用陈小春的歌来送给可恶的偷车大盗，算你狠！！！&lt;/p&gt;
+&lt;hr&gt;
 </content>
     
     <summary type="html">
@@ -1613,7 +1683,7 @@
     <link href="http://yoursite.com/work/2016-05-10/es6-feature.html"/>
     <id>http://yoursite.com/work/2016-05-10/es6-feature.html</id>
     <published>2016-05-10T15:11:23.000Z</published>
-    <updated>2016-08-16T16:29:28.000Z</updated>
+    <updated>2016-10-11T16:28:50.000Z</updated>
     
     <content type="html">&lt;hr&gt;
 &lt;p&gt;ES6是即将到来的新版本JavaScript语言的标准，他给我们带来了更”甜”的语法糖（一种语法，使得语言更容易理解和更具有可读性，也让我们编写代码更加简单快捷），如箭头函数（=&amp;gt;）、class等等。用一句话来说就是：&lt;/p&gt;
@@ -1691,9 +1761,9 @@
       <category term="工作" scheme="http://yoursite.com/categories/work/"/>
     
     
-      <category term="es6" scheme="http://yoursite.com/tags/es6/"/>
-    
       <category term="javascript" scheme="http://yoursite.com/tags/javascript/"/>
+    
+      <category term="es6" scheme="http://yoursite.com/tags/es6/"/>
     
   </entry>
   
@@ -1702,7 +1772,7 @@
     <link href="http://yoursite.com/work/2016-05-08/react-todo-demo.html"/>
     <id>http://yoursite.com/work/2016-05-08/react-todo-demo.html</id>
     <published>2016-05-08T14:11:51.000Z</published>
-    <updated>2016-07-23T09:54:56.000Z</updated>
+    <updated>2016-10-11T16:29:43.000Z</updated>
     
     <content type="html">&lt;hr&gt;
 &lt;header style=&quot;margin-top:-55px;&quot;&gt;&lt;br&gt;    &lt;h1 class=&quot;todo-title&quot;&gt;&lt;span&gt;React-Todos&lt;/span&gt;&lt;a href=&quot;https://github.com/luckykun/react-demo&quot; style=&quot;font-size:14px;font-weight:normal;&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;view on github&lt;/a&gt;&lt;/h1&gt;&lt;br&gt;&lt;/header&gt;
@@ -1749,7 +1819,7 @@
     <link href="http://yoursite.com/work/2016-05-02/grunt-angular.html"/>
     <id>http://yoursite.com/work/2016-05-02/grunt-angular.html</id>
     <published>2016-05-02T14:33:32.000Z</published>
-    <updated>2016-08-24T16:38:59.000Z</updated>
+    <updated>2016-10-11T16:29:02.000Z</updated>
     
     <content type="html">&lt;hr&gt;
 &lt;p&gt;前段时间在公司做了一个项目，前后端的合作方式是这样的：前端开发页面，然后把代码给到后端同学，后端同学通过java的vm模板来渲染页面。慢慢的我发现，这种方式简直是太low了，因为所有的前端代码都揉在服务端同学那里，而每次项目需要更新，甚至只是页面微调，只要服务端同学说他不懂，或者是没有时间，我们前端同学就要屁颠屁颠的跑去他那里配合他修改代码，维护成本高，卖力不讨好==，那我们到底该怎么办呢？&lt;/p&gt;
@@ -1896,7 +1966,7 @@
     <link href="http://yoursite.com/work/2016-04-23/heoll-hexo.html"/>
     <id>http://yoursite.com/work/2016-04-23/heoll-hexo.html</id>
     <published>2016-04-23T14:11:51.000Z</published>
-    <updated>2016-08-30T13:47:53.000Z</updated>
+    <updated>2016-10-11T15:46:08.000Z</updated>
     
     <content type="html">&lt;hr&gt;
 &lt;p&gt;一直都在博客园写博客，不过最近在逛园子的时候不小心看到了&lt;code&gt;hexo&lt;/code&gt;,简直有种相见恨晚的感觉呀！在github上创建自己的开源博客，维护方便，主题多多，更重要的是，终于找到只属于自己的小窝啦！也希望自己能坚持写文^_^&lt;/p&gt;
@@ -2015,9 +2085,9 @@
       <category term="工作" scheme="http://yoursite.com/categories/work/"/>
     
     
-      <category term="hexo系列" scheme="http://yoursite.com/tags/hexo%E7%B3%BB%E5%88%97/"/>
-    
       <category term="教程" scheme="http://yoursite.com/tags/%E6%95%99%E7%A8%8B/"/>
+    
+      <category term="hexo系列" scheme="http://yoursite.com/tags/hexo%E7%B3%BB%E5%88%97/"/>
     
   </entry>
   

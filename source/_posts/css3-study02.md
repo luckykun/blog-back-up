@@ -168,7 +168,7 @@ transform-style: flat | preserve-3d
 - 立方体底面
 
   ```js
-    .top {
+    .bottom {
         left: 200px;
         bottom: -200px;
         transform: rotateX(90deg);
@@ -179,7 +179,7 @@ transform-style: flat | preserve-3d
 - 立方体左面
 
   ```js
-    .top {
+    .left {
         left: -200px;
         top: 200px;
         transform: rotateY(90deg);
@@ -190,7 +190,7 @@ transform-style: flat | preserve-3d
 - 立方体右面
 
   ```js
-    .top {
+    .right {
         left: 600px;
         top: 200px;
         transform: rotateY(-90deg);
@@ -201,7 +201,7 @@ transform-style: flat | preserve-3d
 - 立方体前面
 
   ```js
-    .top {
+    .front {
         left: 200px;
         top: 200px;
         transform: translateZ(400px);  //立方体前面正对着屏幕，所以不用旋转，只需向Z轴前移动距离
@@ -211,7 +211,7 @@ transform-style: flat | preserve-3d
 - 立方体后面
 
   ```js
-    .top {
+    .back {
         left: 200px;
         top: 200px;
         transform: translateZ(0);   //立方体后面正对着屏幕，所以不用旋转，只需向Z轴后移动距离
@@ -273,3 +273,7 @@ transform-style: flat | preserve-3d
 总而言之，在我学习CSS3的过程中，见到了不少的新特性，也学会了如何使用，但是我想说的是我们不管要学会怎么使用，更要去理解每一行代码为什么产生对应的效果，特别是对于`3D transform`，我们要从根本去理解了`3D空间`，才能更好的去掌握它的每一个属性值能够带来的效果。
 
 这篇文章内容稍微有点多，自己记录这篇文章的同时又对这个效果学习巩固了一篇，还是蛮开心哒。同时也希望能对各位看官在以后学习`3D transform`的道路上起到一点点作用！
+
+
+
+--------------------------------------------------------------------------------
